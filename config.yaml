@@ -22,7 +22,7 @@ points:
   zones:
     matrix:
       anchor:
-        shift: [40, -190] # Move into KiCAD position
+        shift: [40, -180] # Move into KiCAD position
       columns:      
         outer.key.column_net: "GP7"
         
@@ -77,7 +77,8 @@ points:
     distance: 270
 
 outlines:
-  _outline: # Starting outline of Keyboard
+  # Main outline 
+  _outline: 
     - what: polygon
       points:
       - ref: matrix_outer_bottom
@@ -112,14 +113,7 @@ outlines:
       size: [U,U]
       expand: outlinePadding
 
-  _keys:
-    - what: rectangle
-      where: true
-      size: [18,18]
-    - what: rectangle
-      where: /.atrix_thumb_center/
-      size: [27, 18]
-
+  # Outline of keys (With padding around each one)
   _bigKeysCase:
     - what: rectangle
       where: true
@@ -178,22 +172,33 @@ outlines:
         shift: [-9, 15]
       expand: 1.5
 
+  # MCU cutout for PCB
   _mcuCutoutPCB:
     - what: rectangle
       size: [18+1-7, 23.5+1-4]
 
-  _trrsCutoutCase:
-    - what: rectangle
-      size: [12+1+4, 6+1]
-      where: /.atrix_inner_num/
-      adjust.shift: [9.75+2, 14]
-
+  # MCU cutout for case
   _mcuCutoutCase:
     - what: rectangle
       size: [18+1-7, 23.5+1-4+4]
       where: /.atrix_outer_num/
       adjust.shift: [-0.3, 25+2]
 
+  # MCU cutout for PCBSupport
+  _mcuCutoutPCBSupport:
+    - what: rectangle
+      size: [18+1, 23.5+1]
+      where: /.atrix_outer_num/
+      adjust.shift: [-0.3, 25+2]
+
+  # TRRS cutout for Ccase
+  _trrsCutoutCase:
+    - what: rectangle
+      size: [12+1+4, 6+1]
+      where: /.atrix_inner_num/
+      adjust.shift: [9.75+2, 14]
+
+  # Holes in both PCB and case
   _holes:
     - what: circle
       radius: screwRadius
@@ -208,10 +213,12 @@ outlines:
       where: /.atrix_outer_(num|home)/
       adjust.shift: [-7.5, -9.5]
 
+  # Cutout for each key for being platemounted
   _keyCutout:
     - what: rectangle
       size: [14, 14]
 
+  # PCB Outline
   _pcbLeft:
     - what: outline
       name: _outline
@@ -227,6 +234,7 @@ outlines:
       operation: subtract
       fillet: 0.25
 
+  # PCB Outline
   _pcbRight:
     - what: outline
       name: _outline
@@ -242,6 +250,7 @@ outlines:
       operation: subtract
       fillet: 0.25
 
+  # Plate outline with cutouts
   _plates:
     - what: outline
       name: _outline
@@ -251,24 +260,7 @@ outlines:
       operation: subtract
       fillet: 0.5
 
-  _plateLeft:
-    - what: outline
-      name: _plates
-    - what: rectangle
-      size: 10U
-      operation: subtract
-      where:
-        ref: mirror_matrix_middle_home
-
-  _plateRight:
-    - what: outline
-      name: _plates
-    - what: rectangle
-      size: 10U
-      operation: subtract
-      where:
-        ref: matrix_middle_home
-
+  # Support for PCB on bottom case
   _pcbSupport:
     - what: outline
       name: _outline
@@ -276,13 +268,13 @@ outlines:
     - what: outline
       name: _outline
       operation: stack
-    # Cuts to not overlap with pads
     - what: outline
       name: _trrsCutoutCase
       operation: subtract
     - what: outline
-      name: _mcuCutoutCase
+      name: _mcuCutoutPCBSupport
       operation: subtract
+    # Cuts to not overlap with pads
     - what: rectangle
       size: [1U+1, 4]
       where: /.atrix_thumb_reach/
@@ -297,12 +289,6 @@ outlines:
     - what: outline
       name: _outline
       operation: subtract
-
-  representation: 
-    - what: outline
-      name: _keys
-    - what: outline 
-      name: _walls
 
   _wallAroundKeys:
     - what: outline
@@ -399,7 +385,7 @@ cases:
     - what: case
       name: bottom
     - what: outline
-      name: _leftSubstitution
+      name: _rightSubstitution
       extrude: 100
       shift: [0,0,-50]
       operation: subtract
@@ -408,7 +394,7 @@ cases:
     - what: case
       name: bottom
     - what: outline
-      name: _rightSubstitution
+      name: _leftSubstitution
       extrude: 100
       shift: [0,0,-50]
       operation: subtract

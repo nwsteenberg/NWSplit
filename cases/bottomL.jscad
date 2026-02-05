@@ -24,6 +24,18 @@ function _pcbSupport_extrude_5_outline_fn(){
 }
 
 
+function _walls_extrude_8_5_outline_fn(){
+    return new CSG.Path2D([[293.6422105,-198.74],[357.2946633,-198.74]]).appendArc([365.7946535,-190.2529096],{"radius":8.5,"clockwise":false,"large":false}).appendPoint([365.9303176,-95.6271864]).appendArc([357.4303264,-87.115],{"radius":8.5,"clockwise":false,"large":false}).appendPoint([243.6169546,-87.115]).appendArc([235.1169579,-95.6225692],{"radius":8.5,"clockwise":false,"large":false}).appendPoint([235.1976598,-186.2466875]).appendPoint([221.4579197,-191.2475439]).appendArc([219.366066,-195.7335387],{"radius":3.5,"clockwise":false,"large":false}).appendPoint([225.8815499,-213.634683]).appendArc([230.3675445,-215.7265367],{"radius":3.5,"clockwise":false,"large":false}).appendPoint([248.1250906,-209.2633183]).appendPoint([275.3829129,-201.9596068]).appendPoint([293.6422105,-198.74]).close().innerToCAG()
+.subtract(
+    new CSG.Path2D([[293.4672329,-196.74],[357.2946633,-196.74]]).appendArc([363.7946566,-190.249319],{"radius":6.5,"clockwise":false,"large":false}).appendPoint([363.9303197,-95.624319]).appendArc([357.4303264,-89.115],{"radius":6.5,"clockwise":false,"large":false}).appendPoint([243.6169546,-89.115]).appendArc([237.1169571,-95.6207882],{"radius":6.5,"clockwise":false,"large":false}).appendPoint([237.1989072,-187.6466485]).appendPoint([222.14196,-193.1269292]).appendArc([221.2454513,-195.0494983],{"radius":1.5,"clockwise":false,"large":false}).appendPoint([227.7609351,-212.9506427]).appendArc([229.6835042,-213.8471514],{"radius":1.5,"clockwise":false,"large":false}).appendPoint([247.5231068,-207.354067]).appendPoint([274.9496213,-200.0051546]).appendPoint([293.4672329,-196.74]).close().innerToCAG()
+).union(
+    new CSG.Path2D([[94.3577898,-198.74],[30.7053367,-198.74]]).appendArc([22.2053465,-190.2529096],{"radius":8.5,"clockwise":true,"large":false}).appendPoint([22.0696824,-95.6271864]).appendArc([30.5696736,-87.115],{"radius":8.5,"clockwise":true,"large":false}).appendPoint([144.3830455,-87.115]).appendArc([152.8830421,-95.6225693],{"radius":8.5,"clockwise":true,"large":false}).appendPoint([152.8023402,-186.2466874]).appendPoint([166.5420803,-191.247544]).appendArc([168.633934,-195.7335386],{"radius":3.5,"clockwise":true,"large":false}).appendPoint([162.1184501,-213.634683]).appendArc([157.6324555,-215.7265367],{"radius":3.5,"clockwise":true,"large":false}).appendPoint([139.8749091,-209.2633182]).appendPoint([112.6170868,-201.9596068]).appendPoint([94.3577898,-198.74]).close().innerToCAG()
+.subtract(
+    new CSG.Path2D([[94.5327671,-196.74],[30.7053367,-196.74]]).appendArc([24.2053434,-190.249319],{"radius":6.5,"clockwise":true,"large":false}).appendPoint([24.0696803,-95.624319]).appendArc([30.5696736,-89.115],{"radius":6.5,"clockwise":true,"large":false}).appendPoint([144.3830455,-89.115]).appendArc([150.8830429,-95.6207883],{"radius":6.5,"clockwise":true,"large":false}).appendPoint([150.8010928,-187.6466485]).appendPoint([165.85804,-193.1269292]).appendArc([166.7545487,-195.0494983],{"radius":1.5,"clockwise":true,"large":false}).appendPoint([160.2390649,-212.9506427]).appendArc([158.3164958,-213.8471514],{"radius":1.5,"clockwise":true,"large":false}).appendPoint([140.4768932,-207.354067]).appendPoint([113.0503787,-200.0051546]).appendPoint([94.5327671,-196.74]).close().innerToCAG()
+)).extrude({ offset: [0, 0, 8.5] });
+}
+
+
 function _holes_extrude_50_outline_fn(){
     return CAG.circle({"center":[355.5,-132.5],"radius":1.05})
 .union(
@@ -45,6 +57,22 @@ function _holes_extrude_50_outline_fn(){
 ).union(
     CAG.circle({"center":[139.2952332,-203.1727513],"radius":1.05})
 ).extrude({ offset: [0, 0, 50] });
+}
+
+
+function _mcuCutoutCase_extrude_7_outline_fn(){
+    return new CSG.Path2D([[342.3,-108.25],[354.3,-108.25]]).appendPoint([354.3,-83.75]).appendPoint([342.3,-83.75]).appendPoint([342.3,-108.25]).close().innerToCAG()
+.union(
+    new CSG.Path2D([[33.7,-108.25],[45.7,-108.25]]).appendPoint([45.7,-83.75]).appendPoint([33.7,-83.75]).appendPoint([33.7,-108.25]).close().innerToCAG()
+).extrude({ offset: [0, 0, 7] });
+}
+
+
+function _trrsCutoutCase_extrude_6_outline_fn(){
+    return new CSG.Path2D([[232.75,-101.07],[249.75,-101.07]]).appendPoint([249.75,-94.07]).appendPoint([232.75,-94.07]).appendPoint([232.75,-101.07]).close().innerToCAG()
+.union(
+    new CSG.Path2D([[138.25,-101.07],[155.25,-101.07]]).appendPoint([155.25,-94.07]).appendPoint([138.25,-94.07]).appendPoint([138.25,-101.07]).close().innerToCAG()
+).extrude({ offset: [0, 0, 6] });
 }
 
 
@@ -86,7 +114,7 @@ function _holes_extrude_50_outline_fn(){
             
 
                 // creating part 2 of case bottom
-                let bottom__part_2 = _holes_extrude_50_outline_fn();
+                let bottom__part_2 = _walls_extrude_8_5_outline_fn();
 
                 // make sure that rotations are relative
                 let bottom__part_2_bounds = bottom__part_2.getBounds();
@@ -97,7 +125,55 @@ function _holes_extrude_50_outline_fn(){
                 bottom__part_2 = translate([bottom__part_2_x, bottom__part_2_y, 0], bottom__part_2);
 
                 bottom__part_2 = translate([0,0,0], bottom__part_2);
-                result = result.subtract(bottom__part_2);
+                result = result.union(bottom__part_2);
+                
+            
+
+                // creating part 3 of case bottom
+                let bottom__part_3 = _holes_extrude_50_outline_fn();
+
+                // make sure that rotations are relative
+                let bottom__part_3_bounds = bottom__part_3.getBounds();
+                let bottom__part_3_x = bottom__part_3_bounds[0].x + (bottom__part_3_bounds[1].x - bottom__part_3_bounds[0].x) / 2
+                let bottom__part_3_y = bottom__part_3_bounds[0].y + (bottom__part_3_bounds[1].y - bottom__part_3_bounds[0].y) / 2
+                bottom__part_3 = translate([-bottom__part_3_x, -bottom__part_3_y, 0], bottom__part_3);
+                bottom__part_3 = rotate([0,0,0], bottom__part_3);
+                bottom__part_3 = translate([bottom__part_3_x, bottom__part_3_y, 0], bottom__part_3);
+
+                bottom__part_3 = translate([0,0,0], bottom__part_3);
+                result = result.subtract(bottom__part_3);
+                
+            
+
+                // creating part 4 of case bottom
+                let bottom__part_4 = _mcuCutoutCase_extrude_7_outline_fn();
+
+                // make sure that rotations are relative
+                let bottom__part_4_bounds = bottom__part_4.getBounds();
+                let bottom__part_4_x = bottom__part_4_bounds[0].x + (bottom__part_4_bounds[1].x - bottom__part_4_bounds[0].x) / 2
+                let bottom__part_4_y = bottom__part_4_bounds[0].y + (bottom__part_4_bounds[1].y - bottom__part_4_bounds[0].y) / 2
+                bottom__part_4 = translate([-bottom__part_4_x, -bottom__part_4_y, 0], bottom__part_4);
+                bottom__part_4 = rotate([0,0,0], bottom__part_4);
+                bottom__part_4 = translate([bottom__part_4_x, bottom__part_4_y, 0], bottom__part_4);
+
+                bottom__part_4 = translate([0,0,2], bottom__part_4);
+                result = result.subtract(bottom__part_4);
+                
+            
+
+                // creating part 5 of case bottom
+                let bottom__part_5 = _trrsCutoutCase_extrude_6_outline_fn();
+
+                // make sure that rotations are relative
+                let bottom__part_5_bounds = bottom__part_5.getBounds();
+                let bottom__part_5_x = bottom__part_5_bounds[0].x + (bottom__part_5_bounds[1].x - bottom__part_5_bounds[0].x) / 2
+                let bottom__part_5_y = bottom__part_5_bounds[0].y + (bottom__part_5_bounds[1].y - bottom__part_5_bounds[0].y) / 2
+                bottom__part_5 = translate([-bottom__part_5_x, -bottom__part_5_y, 0], bottom__part_5);
+                bottom__part_5 = rotate([0,0,0], bottom__part_5);
+                bottom__part_5 = translate([bottom__part_5_x, bottom__part_5_y, 0], bottom__part_5);
+
+                bottom__part_5 = translate([0,0,6.6], bottom__part_5);
+                result = result.subtract(bottom__part_5);
                 
             
                     return result;

@@ -1,5 +1,5 @@
 # NWSplit keyboard
-NWSplit is a 56 keys, columnar staggered, split keyboard designed using Ergogen. Named after me, NWS, because i suck at naming things.
+NWSplit is a columnar staggered, split keyboard designed using Ergogen. Named after myself, NWS, because I suck at naming things.
 
 ![NWSplit Keyboard](images/nwsplit.jpg) 
 
@@ -9,10 +9,9 @@ ________________________________________
 
 - Columnar staggered
 - 3 key thumb clusters with a wide (1.5u) center thumb key
-- Wired using TRRS to connect both halves
 - QMK and VIAL firmware
 - Hot-swappable MX and Choc V2 sockets
-- RP2040-zero MCU
+- RP2040-zero controller
 - Case and PCB designed entirely in [Ergogen](https://ergogen.xyz/) 
 
 ## Repo Structure

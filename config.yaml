@@ -1,9 +1,8 @@
 units:
   outlinePadding: 1.5
   baseHeight: 2
-  supportHeight: 3 #min 1.85mm (socket size) 2.5mm Standoffs
-  wallHeight: supportHeight + 1.6
-  wallThickness: 2
+  pcbThickness: 1.6
+  supportHeight: 3 + baseHeight #min 1.85mm (socket size) 2.5mm Standoffs
   screwRadius: 1.05 # M2 + 0.1mm buffer
 
   # Choc Keys (Case)
@@ -16,7 +15,8 @@ units:
   keyHeightMX: 6.6
   keyLatchMX: 5
 
-  topPlateThickness: keyLatch+keyHeight
+  wallThickness: 2
+  wallHeight: supportHeight+pcbThickness+keyLatch-plateThickness
 points:
   key:
   zones:
@@ -327,42 +327,54 @@ cases:
     - what: outline
       name: _plates
       extrude: plateThickness
-      shift: [0,0,2.2-plateThickness]
-    - what: outline
-      name: _wallAroundKeys
-      extrude: topPlateThickness
     - what: outline
       name: _topOfCase
-      extrude: topPlateThickness
+      extrude: keyHeight+plateThickness
     - what: outline
       name: _walls
-      extrude: topPlateThickness+wallHeight
-      shift: [0,0, -wallHeight] 
+      extrude: keyHeight+plateThickness
+    - what: outline
+      name: _walls
+      extrude: 1
+      operation: subtract
     - what: outline
       name: _holes
       extrude: 50
       operation: subtract
     - what: outline
-      name: _mcuCutoutCase
-      extrude: 5
-      operation: subtract
-      shift: [0,0, -1.6] 
-    - what: outline
       name: _trrsCutoutCase
       extrude: 6
       operation: subtract
+    - what: outline
+      name: _mcuCutoutCase
+      extrude: 7
+      operation: subtract
+      shift: [0,0, keyHeight+plateThickness-7-2]
+
   bottom:
     - what: outline
       name: _bigOutlineForBottom
       extrude: baseHeight
     - what: outline
       name: _pcbSupport
-      extrude: supportHeight + baseHeight
+      extrude: supportHeight
+    - what: outline
+      name: _walls
+      extrude: wallHeight+1
     - what: outline
       name: _holes
       extrude: 50
       operation: subtract
-
+    - what: outline
+      name: _mcuCutoutCase
+      extrude: 7
+      operation: subtract
+      shift: [0,0, baseHeight]
+    - what: outline
+      name: _trrsCutoutCase
+      extrude: 6
+      operation: subtract
+      shift: [0,0, supportHeight+pcbThickness]
   topL:
     - what: case
       name: top

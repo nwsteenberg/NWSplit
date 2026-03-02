@@ -1,6 +1,6 @@
 units:
   outlinePadding: 1.5
-  baseHeight: 2
+  baseHeight: 1
   pcbThickness: 1.6
   supportHeight: 3 + baseHeight #min 1.85mm (socket size) 2.5mm Standoffs
   screwRadius: 1.05 # M2 + 0.1mm buffer
@@ -170,7 +170,7 @@ outlines:
         shift: [-9, 9]
       - ref: mirror_matrix_thumb_inner
         shift: [-9, 15]
-      expand: 1.5
+      expand: 1
 
   # MCU cutout for PCB
   _mcuCutoutPCB:
@@ -290,12 +290,23 @@ outlines:
       name: _outline
       operation: subtract
 
-  _wallAroundKeys:
+  # Cutout so that thumb doesnt have walls
+  _thumbsCutout:
+    - what: rectangle
+      where: /.atrix_thumb/
+      size: [2u,2u]
+      adjust.shift: [0.5u, -1u] 
+    - what: rectangle
+      where: /.atrix_thumb_reach/
+      size: [1u,2u]
+      adjust.shift: [0.5u, -0.5u] 
+      expand: 0.5
+
+  _wallsTop:
     - what: outline
-      name: _bigKeysCase
-      expand: 1
+      name: _walls
     - what: outline
-      name: _bigKeysCase
+      name: _thumbsCutout
       operation: subtract
 
   _topOfCase:
@@ -303,6 +314,9 @@ outlines:
       name: _outline
     - what: outline
       name: _bigKeysCase
+      operation: subtract
+    - what: outline
+      name: _thumbsCutout
       operation: subtract
 
   _bigOutlineForBottom:
@@ -328,15 +342,14 @@ cases:
       name: _plates
       extrude: plateThickness
     - what: outline
+      name: _walls
+      extrude: plateThickness
+    - what: outline
       name: _topOfCase
       extrude: keyHeight+plateThickness
     - what: outline
-      name: _walls
+      name: _wallsTop
       extrude: keyHeight+plateThickness
-    - what: outline
-      name: _walls
-      extrude: 1
-      operation: subtract
     - what: outline
       name: _holes
       extrude: 50

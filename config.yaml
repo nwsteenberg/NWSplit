@@ -2,8 +2,11 @@ units:
   outlinePadding: 1.5
   baseHeight: 1
   pcbThickness: 1.6
-  supportHeight: 3 + baseHeight #min 1.85mm (socket size) 2.5mm Standoffs
-  screwRadius: 1.05 # M2 + 0.1mm buffer
+  screwRadius: 1.1 # M2 + 0.2mm buffer
+  standoffRadius: 1.6 # (3.5 OD - 0.3) / 2 
+  standoffHeight: 2.5 #mm
+  standoffWallThickness: 0.8 #mm
+  supportHeight: standoffHeight + baseHeight #min 1.85mm (socket size) 2.5mm Standoffs
 
   # Choc Keys (Case)
   plateThickness: 1.3
@@ -78,7 +81,7 @@ points:
 
 outlines:
   # Main outline 
-  _outline: 
+  _outlinePCB: 
     - what: polygon
       points:
       - ref: matrix_outer_bottom
@@ -112,6 +115,11 @@ outlines:
       where: true
       size: [U,U]
       expand: outlinePadding
+
+  _outline:
+  - what: outline
+    name: _outlinePCB
+    expand: 1
 
   # Outline of keys (With padding around each one)
   _bigKeysCase:
@@ -170,7 +178,8 @@ outlines:
         shift: [-9, 9]
       - ref: mirror_matrix_thumb_inner
         shift: [-9, 15]
-      expand: 1
+      expand: 0.75
+      fillet: 1
 
   # MCU cutout for PCB
   _mcuCutoutPCB:
@@ -199,19 +208,33 @@ outlines:
       adjust.shift: [9.75+2, 14]
 
   # Holes in both PCB and case
+  
   _holes:
     - what: circle
-      radius: screwRadius
+      radius: standoffRadius
       where: /.atrix_thumb_reach/
       adjust.shift: [-12, -7.5]
     - what: circle
-      radius: screwRadius
+      radius: standoffRadius
       where: /.atrix_inner_(num|home)/
       adjust.shift: [7.5, -9.5]
     - what: circle
-      radius: screwRadius
+      radius: standoffRadius 
       where: /.atrix_outer_(num|home)/
       adjust.shift: [-7.5, -9.5]
+
+  _screwHoles:
+    - what: outline
+      name: _holes
+      expand: screwRadius-standoffRadius
+
+  _standoffsBottom:
+    - what: outline
+      name: _holes
+      expand: standoffWallThickness
+    - what: outline
+      name: _holes
+      operation: subtract
 
   # Cutout for each key for being platemounted
   _keyCutout:
@@ -221,7 +244,7 @@ outlines:
   # PCB Outline
   _pcbLeft:
     - what: outline
-      name: _outline
+      name: _outlinePCB
     - what: rectangle
       size: 10U
       operation: subtract
@@ -237,7 +260,7 @@ outlines:
   # PCB Outline
   _pcbRight:
     - what: outline
-      name: _outline
+      name: _outlinePCB
     - what: rectangle
       size: 10U
       operation: subtract
@@ -263,7 +286,7 @@ outlines:
   # Support for PCB on bottom case
   _pcbSupport:
     - what: outline
-      name: _outline
+      name: _outlinePCB
       expand: -wallThickness
     - what: outline
       name: _outline
@@ -335,7 +358,7 @@ outlines:
       size: 10U
       where:
         ref: matrix_middle_home
-
+  
 cases:
   top:
     - what: outline
@@ -351,7 +374,7 @@ cases:
       name: _wallsTop
       extrude: keyHeight+plateThickness
     - what: outline
-      name: _holes
+      name: _screwHoles
       extrude: 50
       operation: subtract
     - what: outline
@@ -369,13 +392,16 @@ cases:
       name: _bigOutlineForBottom
       extrude: baseHeight
     - what: outline
+      name: _standoffsBottom
+      extrude: supportHeight
+    - what: outline
       name: _pcbSupport
       extrude: supportHeight
     - what: outline
       name: _walls
-      extrude: wallHeight+1
+      extrude: wallHeight
     - what: outline
-      name: _holes
+      name: _screwHoles
       extrude: 50
       operation: subtract
     - what: outline

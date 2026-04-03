@@ -1,0 +1,57 @@
+name: Build Firmware
+
+permissions:
+  contents: write
+
+on:
+  push:
+    branches: [ main ]
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Install system dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y \
+            python3 python3-pip \
+            gcc-avr binutils-avr avr-libc dfu-programmer dfu-util \
+            gcc-arm-none-eabi binutils-arm-none-eabi libnewlib-arm-none-eabi
+
+      - name: Install QMK CLI
+        run: |
+          curl -fsSL https://install.qmk.fm | sh
+          qmk setup
+
+      - name: Clone Vial-QMK
+        run: |
+          git clone https://github.com/vial-kb/vial-qmk.git vial-qmk-src --depth=1
+          cd vial-qmk-src
+          python3 -m pip install -r requirements.txt
+
+      - name: Copy nwsplit into Vial-QMK
+        run: |
+          cp -r vial-qmk/nwsplit/ vial-qmk-src/keyboards/
+
+      - name: Build firmware
+        run: |
+          cd vial-qmk-src
+          make nwsplit:vial
+
+      - name: Create Release (only when tagged)
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: vial-qmk-src/nwsplit_vial.uf2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+

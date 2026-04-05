@@ -6,4 +6,3 @@
 
 #define VIAL_UNLOCK_COMBO_ROWS { 4, 9 }
 #define VIAL_UNLOCK_COMBO_COLS { 4, 4 }
-

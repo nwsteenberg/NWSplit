@@ -1,351 +1,108 @@
 units:
-  outlinePadding: 1.5
-  baseHeight: 1
+  outlinePadding: 1
+
+  plateThickness: 1.6
   pcbThickness: 1.6
+
+  keyCutoutDimentions: 13.95
+
+  # Case
+  baseHeight: 2
   screwRadius: 1.1 # M2 + 0.2mm buffer
-  standoffRadius: 1.6 # (3.5 OD - 0.3) / 2 
-  standoffHeight: 2.5 #mm
+  screwHeadRadius: 2.1 # 4mm + 0.2mm buffer
+  standoffRadius: 1.6 # (3.5 OD - 0.3) / 2
   standoffWallThickness: 0.8 #mm
-  supportHeight: standoffHeight + baseHeight #min 1.85mm (socket size) 2.5mm Standoffs
+  fromPlateToTop: 5
 
-  # Choc Keys (Case)
-  plateThickness: 1.3
-  keyHeight: 3.1
-  keyLatch: 2.2
+  baseWallHeight: baseHeight + pcbThickness
+  topWallHeight: 2.2
+  wallThickness: 1.6
 
-  # MX keys (Case)
-  plateThicknessMX: 1.6
-  keyHeightMX: 6.6
-  keyLatchMX: 5
-
-  wallThickness: 2
-  wallHeight: supportHeight+pcbThickness+keyLatch-plateThickness
 points:
-  key:
   zones:
     matrix:
       anchor:
         shift: [40, -180] # Move into KiCAD position
-      columns:      
-        outer.key.column_net: "GP7"
-        
-        pinky.key.column_net: "GP6"
-        pinky.key.stagger: 0.6U
-        
-        ring.key.column_net: "GP5"
-        ring.key.stagger: 0.1U
-        
-        middle.key.column_net: "GP4"
+      columns:
+        outer.key.column_net: "GP29"
+
+        pinky.key.column_net: "GP28"
+        pinky.key.stagger: 0.1U
+
+        ring.key.column_net: "GP27"
+        ring.key.stagger: 0.6U
+
+        middle.key.column_net: "GP26"
         middle.key.stagger: 0.2U
 
-        index.key.column_net: "GP3"
-        index.key.stagger: -0.2U
-        
-        inner.key.column_net: "GP2"
-        inner.key.stagger: -0.1U
+        index.key.column_net: "GP15"
+        index.key.stagger: -0.25U
+
+        inner.key.column_net: "GP14"
+        inner.key.stagger: -0.2U
       rows:
-        bottom.row_net: "GP10"
+        bottom.row_net: "GP12"
         home.row_net: "GP11"
-        top.row_net: "GP12"
-        num.row_net: "GP13"
+        top.row_net: "GP10"
+        num.row_net: "GP9"
     thumb:
       anchor:
         ref: matrix_index_bottom
-        shift: [-0.62U, -1U]
+        shift: [0U, -1.3U]
       columns:
         inner:
           key.name: matrix_thumb_inner
-          key.column_net: "GP4"
-          key.splay: -10
+          key.column_net: "GP26"
           key.origin: [-0.5U, -0.5U]
         center:
           key.name: matrix_thumb_center
-          key.column_net: "GP3"
-          key.width: 1.5U
-          key.adjust.shift: [0.25U, 0U]
-          key.splay: -5
+          key.column_net: "GP15"
+          key.splay: -15
           key.origin: [-0.5U, -0.5U]
-          key.bind: [0, 0.25U, 0, 0.25U]
-        reach:
-          key.name: matrix_thumb_reach
-          key.column_net: "GP2"
-          key.splay: -5
-          key.origin: [0U, -0.5U]
-          key.adjust.shift: [0.5U, 0U]
+        outer:
+          key.name: matrix_thumb_outer
+          key.column_net: "GP14"
+          key.splay: -10
+          key.origin: [-0.5U, -0.5U]
       rows:
         only:
-          row_net: "GP9"
+          row_net: "GP13"
+    screw_1:
+      anchor:
+        - ref: matrix_inner_bottom
+          shift: [13, -9.5]
+    screw_2:
+      anchor:
+        - ref: matrix_inner_num
+          shift: [13, 21.5]
+    screw_3:
+      anchor:
+        - ref: matrix_ring_num
+          shift: [-9.5, 15]
+    screw_4:
+      anchor:
+        - ref: matrix_outer_num
+          shift: [-13, 5]
+    screw_5:
+      anchor:
+        - ref: matrix_outer_bottom
+          shift: [-13, -13]
+    screw_6:
+      anchor:
+        - ref: matrix_middle_bottom
+          shift: [0, -25]
+    screw_7:
+      anchor:
+        - ref: matrix_thumb_outer
+          shift: [8.5, 8.5]
   mirror:
     ref: matrix_pinky_home
     distance: 270
-
 outlines:
-  # Main outline 
-  _outlinePCB: 
-    - what: polygon
-      points:
-      - ref: matrix_outer_bottom
-        shift: [4.75U, -0.8U]
-      - ref: matrix_outer_bottom
-        shift: [-0.75U, -0.8U]
-      - ref: matrix_middle_num
-        shift: [-3.75U, 0.8U]
-      - ref: matrix_middle_num
-        shift: [2.75U, 0.8U]
-      - ref: matrix_inner_home
-        shift: [0.75U, -2.8U]
-    - what: polygon
-      points:
-      - ref: mirror_matrix_outer_bottom
-        shift: [4.75U, -0.8U]
-      - ref: mirror_matrix_outer_bottom
-        shift: [-0.75U, -0.8U]
-      - ref: mirror_matrix_middle_num
-        shift: [-3.75U, 0.8U]
-      - ref: mirror_matrix_middle_num
-        shift: [2.75U, 0.8U]
-      - ref: mirror_matrix_inner_home
-        shift: [0.75U, -2.8U]
-      fillet: 5
+  _keysCutout:
     - what: rectangle
-      where: /.atrix_thumb/
-      bound: true
-      size: [U,U]
-    - what: rectangle
-      where: true
-      size: [U,U]
-      expand: outlinePadding
-
-  _outline:
-  - what: outline
-    name: _outlinePCB
-    expand: 1
-
-  # Outline of keys (With padding around each one)
-  _bigKeysCase:
-    - what: rectangle
-      where: true
-      size: [18,18]
-    - what: polygon
-      points:
-      - ref: matrix_index_bottom
-        shift: [9, -9]
-      - ref: matrix_index_bottom
-        shift: [9, -15]
-      - ref: matrix_thumb_inner
-        shift: [9, 9]
-      - ref: matrix_thumb_center
-        shift: [-12, 9]
-      - ref: matrix_thumb_center
-        shift: [12, 9]
-      - ref: matrix_thumb_reach
-        shift: [-9, 9]
-      - ref: matrix_thumb_reach
-        shift: [-9, -9]
-      - ref: matrix_thumb_center
-        shift: [-12, -9]
-      - ref: matrix_thumb_center
-        shift: [12, -9]
-      - ref: matrix_thumb_inner
-        shift: [9, -9]
-      - ref: matrix_thumb_inner
-        shift: [-9, 9]
-      - ref: matrix_thumb_inner
-        shift: [-9, 15]
-    - what: polygon
-      points:
-      - ref: mirror_matrix_index_bottom
-        shift: [9, -9]
-      - ref: mirror_matrix_index_bottom
-        shift: [9, -15]
-      - ref: mirror_matrix_thumb_inner
-        shift: [9, 9]
-      - ref: mirror_matrix_thumb_center
-        shift: [-12, 9]
-      - ref: mirror_matrix_thumb_center
-        shift: [12, 9]
-      - ref: mirror_matrix_thumb_reach
-        shift: [-9, 9]
-      - ref: mirror_matrix_thumb_reach
-        shift: [-9, -9]
-      - ref: mirror_matrix_thumb_center
-        shift: [-12, -9]
-      - ref: mirror_matrix_thumb_center
-        shift: [12, -9]
-      - ref: mirror_matrix_thumb_inner
-        shift: [9, -9]
-      - ref: mirror_matrix_thumb_inner
-        shift: [-9, 9]
-      - ref: mirror_matrix_thumb_inner
-        shift: [-9, 15]
-      expand: 0.75
-      fillet: 1
-
-  # MCU cutout for PCB
-  _mcuCutoutPCB:
-    - what: rectangle
-      size: [18+1-7, 23.5+1-4]
-
-  # MCU cutout for case
-  _mcuCutoutCase:
-    - what: rectangle
-      size: [18+1-7, 23.5+1-4+4]
-      where: /.atrix_outer_num/
-      adjust.shift: [-0.3, 25+2]
-
-  # MCU cutout for PCBSupport
-  _mcuCutoutPCBSupport:
-    - what: rectangle
-      size: [18+1, 23.5+1]
-      where: /.atrix_outer_num/
-      adjust.shift: [-0.3, 25+2]
-
-  # TRRS cutout for Ccase
-  _trrsCutoutCase:
-    - what: rectangle
-      size: [12+1+4, 6+1]
-      where: /.atrix_inner_num/
-      adjust.shift: [9.75+2, 14]
-
-  # Holes in both PCB and case
-  
-  _holes:
-    - what: circle
-      radius: standoffRadius
-      where: /.atrix_thumb_reach/
-      adjust.shift: [-12, -7.5]
-    - what: circle
-      radius: standoffRadius
-      where: /.atrix_inner_(num|home)/
-      adjust.shift: [7.5, -9.5]
-    - what: circle
-      radius: standoffRadius 
-      where: /.atrix_outer_(num|home)/
-      adjust.shift: [-7.5, -9.5]
-
-  _screwHoles:
-    - what: outline
-      name: _holes
-      expand: screwRadius-standoffRadius
-
-  _standoffsBottom:
-    - what: outline
-      name: _holes
-      expand: standoffWallThickness
-    - what: outline
-      name: _holes
-      operation: subtract
-
-  # Cutout for each key for being platemounted
-  _keyCutout:
-    - what: rectangle
-      size: [14, 14]
-
-  # PCB Outline
-  _pcbLeft:
-    - what: outline
-      name: _outlinePCB
-    - what: rectangle
-      size: 10U
-      operation: subtract
-      where:
-        ref: mirror_matrix_middle_home
-    - what: outline
-      name: _mcuCutoutPCB
-      where: /.atrix_outer_num/
-      adjust.shift: [-0.3, 25]
-      operation: subtract
-      fillet: 0.25
-
-  # PCB Outline
-  _pcbRight:
-    - what: outline
-      name: _outlinePCB
-    - what: rectangle
-      size: 10U
-      operation: subtract
-      where:
-        ref: matrix_middle_home
-    - what: outline
-      name: _mcuCutoutPCB
-      where: /.atrix_outer_num/
-      adjust.shift: [-0.3, 25]
-      operation: subtract
-      fillet: 0.25
-
-  # Plate outline with cutouts
-  _plates:
-    - what: outline
-      name: _outline
-    - what: outline
-      name: _keyCutout
-      where: true
-      operation: subtract
-      fillet: 0.5
-
-  # Support for PCB on bottom case
-  _pcbSupport:
-    - what: outline
-      name: _outlinePCB
-      expand: -wallThickness
-    - what: outline
-      name: _outline
-      operation: stack
-    - what: outline
-      name: _trrsCutoutCase
-      operation: subtract
-    - what: outline
-      name: _mcuCutoutPCBSupport
-      operation: subtract
-    # Cuts to not overlap with pads
-    - what: rectangle
-      size: [1U+1, 4]
-      where: /.atrix_thumb_reach/
-      adjust:
-        shift: [0U, 3.5]
-      operation: subtract
-
-  _walls:
-    - what: outline
-      name: _outline
-      expand: wallThickness
-    - what: outline
-      name: _outline
-      operation: subtract
-
-  # Cutout so that thumb doesnt have walls
-  _thumbsCutout:
-    - what: rectangle
-      where: /.atrix_thumb/
-      size: [2u,2u]
-      adjust.shift: [0.5u, -1u] 
-    - what: rectangle
-      where: /.atrix_thumb_reach/
-      size: [1u,2u]
-      adjust.shift: [0.5u, -0.5u] 
-      expand: 0.5
-
-  _wallsTop:
-    - what: outline
-      name: _walls
-    - what: outline
-      name: _thumbsCutout
-      operation: subtract
-
-  _topOfCase:
-    - what: outline
-      name: _outline
-    - what: outline
-      name: _bigKeysCase
-      operation: subtract
-    - what: outline
-      name: _thumbsCutout
-      operation: subtract
-
-  _bigOutlineForBottom:
-    - what: outline
-      name: _outline
-      expand: wallThickness
+      size: [keyCutoutDimentions, keyCutoutDimentions]
+      fillet: 0.1
 
   _rightSubstitution:
     - what: rectangle
@@ -358,270 +115,671 @@ outlines:
       size: 10U
       where:
         ref: matrix_middle_home
-  
-cases:
-  top:
-    - what: outline
-      name: _plates
-      extrude: plateThickness
-    - what: outline
-      name: _walls
-      extrude: plateThickness
-    - what: outline
-      name: _topOfCase
-      extrude: keyHeight+plateThickness
-    - what: outline
-      name: _wallsTop
-      extrude: keyHeight+plateThickness
-    - what: outline
-      name: _screwHoles
-      extrude: 50
-      operation: subtract
-    - what: outline
-      name: _trrsCutoutCase
-      extrude: 6
-      operation: subtract
-    - what: outline
-      name: _mcuCutoutCase
-      extrude: 7
-      operation: subtract
-      shift: [0,0, keyHeight+plateThickness-7-2]
 
-  bottom:
+  _bottomKeyCutout:
+    - what: rectangle
+      size: [16.5, 15.5]
+      adjust.shift: [-1.5, -1]
+      fillet: 4
+
+  _bottomMCUCutout:
+    - what: rectangle
+      size: [18.5, 24+2]
+      where: /matrix_outer_num/
+      adjust.shift: [-4.51-1, 20.15]
+      adjust.rotate: 90
+      fillet: 0.5
+
+  _bottomUSBCutout:
+    - what: rectangle
+      size: [10, 2.2]
+      where: /matrix_inner_num/
+      adjust.shift: [0, 13.1]
+      fillet: 0.5
+
+  _mcuButtonCutout:
+    - what: rectangle
+      size: [13, 4.5]
+      adjust.shift: [0, -4]
+
+  _mcuCutout:
+    - what: rectangle
+      size: [13, 4.5]
+      adjust.shift: [0, -4]
+    - what: rectangle
+      size: [9.5, 12]
+      adjust.shift: [0, 11.75-4+1+2]
+      expand: 0.1
+
+  _mcuBuffer:
     - what: outline
-      name: _bigOutlineForBottom
+      name: _mcuCutout
+      where: /matrix_outer_num/
+      adjust.shift: [-4.51, 20.15]
+      adjust.rotate: 90
+      fillet: 0.5
+
+  _USBCutout:
+    - what: rectangle
+      size: [12.5, 17.3]
+      where: /matrix_inner_num/
+      adjust.shift: [0, 19.35]
+      fillet: 0.5
+
+  _holesTop:
+    - what: circle
+      radius: standoffRadius
+      where: /screw/
+    - what: circle
+      radius: standoffRadius+1
+      where: /screw_7/
+      operation: subtract
+    - what: circle
+      radius: screwRadius
+      where: /screw_7/
+
+  _screwRecess:
+    - what: circle
+      radius: screwHeadRadius
+      where: /screw/
+    - what: circle
+      radius: standoffRadius+1
+      where: /screw_7/
+      operation: subtract
+
+  _screwRecessPlate:
+    - what: circle
+      radius: screwHeadRadius
+      where: /screw_7/
+
+  _standOff:
+    - what: circle
+      radius: standoffRadius
+      expand: standoffWallThickness
+      where: /screw_7/
+    - what: circle
+      radius: standoffRadius
+      operation: subtract
+      where: /screw_7/
+
+  # Main outline
+  outline:
+    - what: polygon
+      points:
+        - ref: matrix_outer_bottom
+          shift: [-0.8U, -0.8U]
+        - ref: matrix_middle_num
+          shift: [-3.8U, 0.8U]
+        - ref: matrix_middle_num
+          shift: [2.8U, 0.8U]
+        - ref: matrix_middle_num
+          shift: [2.8U, -4.5U]
+        - ref: matrix_thumb_outer
+          shift: [-1U, 0.5U]
+        - ref: matrix_thumb_outer
+          shift: [0.5U, 0.5U]
+        - ref: matrix_outer_bottom
+          shift: [3.5U, -0.8U]
+    - what: polygon
+      points:
+        - ref: mirror_matrix_outer_bottom
+          shift: [-0.8U, -0.8U]
+        - ref: mirror_matrix_middle_num
+          shift: [-3.8U, 0.8U]
+        - ref: mirror_matrix_middle_num
+          shift: [2.8U, 0.8U]
+        - ref: mirror_matrix_middle_num
+          shift: [2.8U, -4.5U]
+        - ref: mirror_matrix_thumb_outer
+          shift: [-1U, 0.5U]
+        - ref: mirror_matrix_thumb_outer
+          shift: [0.5U, 0.5U]
+        - ref: mirror_matrix_outer_bottom
+          shift: [3.5U, -0.8U]
+      fillet: 0.5
+    # Around keys
+    - what: rectangle
+      where: /matrix/
+      size: [U, U]
+      expand: outlinePadding
+      fillet: 0.5
+
+  _outlinePCB:
+    - what: outline
+      name: outline
+    # MCU cutout
+    - what: rectangle
+      size: [25, 13.15]
+      where: /matrix_outer_num/
+      adjust.shift: [-7.76, 20.15]
+      operation: subtract
+      fillet: 0.5
+
+  _outlinePCBLeft:
+    - what: outline
+      name: _outlinePCB
+    - what: outline
+      name: _rightSubstitution
+      operation: subtract
+
+  _outlinePCBRight:
+    - what: outline
+      name: _outlinePCB
+    - what: outline
+      name: _leftSubstitution
+      operation: subtract
+
+  _outlinePlate:
+    - what: outline
+      name: outline
+      # USB cutout
+    - what: outline
+      name: _USBCutout
+      operation: subtract
+      # MCU Cutout
+    - what: outline
+      name: _mcuBuffer
+      operation: subtract
+    - what: outline
+      name: _keysCutout
+      operation: subtract
+      where: /matrix/
+
+  _plate:
+    - what: outline
+      name: _outlinePlate
+    - what: outline
+      name: _rightSubstitution
+      operation: subtract
+
+  # Case Outlines
+  _caseOutline:
+    - what: outline
+      name: outline
+      expand: 0.5
+
+  _caseWalls:
+    - what: outline
+      name: _caseOutline
+      expand: wallThickness
+    - what: outline
+      name: _caseOutline
+      operation: subtract
+
+  _casePlate:
+    - what: outline
+      name: _caseOutline
+    - what: outline
+      name: _keysCutout
+      operation: subtract
+      where: /matrix/
+
+  _keySupportPlate:
+    - what: outline
+      name: _casePlate
+    - what: rectangle
+      size: [keyCutoutDimentions+1, keyCutoutDimentions+1]
+      where: /matrix/
+      operation: subtract
+
+  _caseTop:
+    - what: outline
+      name: _caseOutline
+      expand: wallThickness
+    - what: outline
+      name: _caseWalls
+    - what: rectangle
+      size: [20, 20]
+      where: /matrix/
+      operation: subtract
+    - what: polygon
+      points:
+        - ref: matrix_thumb_outer
+          shift: [0, 11]
+        - ref: matrix_thumb_outer
+          shift: [-25, 11]
+        - ref: matrix_index_home
+          shift: [-10, 0]
+        - ref: matrix_index_home
+          shift: [-10, -40]
+        - ref: matrix_thumb_inner
+          shift: [10, -10]
+        - ref: matrix_thumb_outer
+      operation: subtract
+    - what: polygon
+      points:
+        - ref: matrix_inner_bottom
+          shift: [10, 0]
+        - ref: matrix_inner_bottom
+          shift: [10, -20]
+        - ref: matrix_inner_bottom
+          shift: [-10, -20]
+      operation: subtract
+    - what: polygon
+      points:
+        - ref: matrix_thumb_inner
+          shift: [-20, -5.96]
+        - ref: matrix_thumb_inner
+          shift: [0, -5.96]
+        - ref: matrix_thumb_inner
+          shift: [0, 0]
+        - ref: matrix_inner_bottom
+          shift: [18.45, -30]
+        - ref: matrix_inner_bottom
+          shift: [18.45, -5]
+        - ref: matrix_thumb_outer
+          shift: [20, 20]
+        - ref: matrix_thumb_outer
+          shift: [20, -20]
+        - ref: matrix_thumb_inner
+          shift: [-20, -20]
+      operation: subtract
+    - what: polygon
+      points:
+        - ref: mirror_matrix_thumb_outer
+          shift: [0, 11]
+        - ref: mirror_matrix_thumb_outer
+          shift: [-25, 11]
+        - ref: mirror_matrix_index_home
+          shift: [-10, 0]
+        - ref: mirror_matrix_index_home
+          shift: [-10, -40]
+        - ref: mirror_matrix_thumb_inner
+          shift: [10, -10]
+        - ref: mirror_matrix_thumb_outer
+      operation: subtract
+    - what: polygon
+      points:
+        - ref: mirror_matrix_inner_bottom
+          shift: [10, 0]
+        - ref: mirror_matrix_inner_bottom
+          shift: [10, -20]
+        - ref: mirror_matrix_inner_bottom
+          shift: [-10, -20]
+      operation: subtract
+    - what: polygon
+      points:
+        - ref: mirror_matrix_thumb_inner
+          shift: [-20, -5.96]
+        - ref: mirror_matrix_thumb_inner
+          shift: [0, -5.96]
+        - ref: mirror_matrix_thumb_inner
+          shift: [0, 0]
+        - ref: mirror_matrix_inner_bottom
+          shift: [18.45, -30]
+        - ref: mirror_matrix_inner_bottom
+          shift: [18.45, -5]
+        - ref: mirror_matrix_thumb_outer
+          shift: [20, 20]
+        - ref: mirror_matrix_thumb_outer
+          shift: [20, -20]
+        - ref: mirror_matrix_thumb_inner
+          shift: [-20, -20]
+      operation: subtract
+      fillet: 0.75
+
+  outlineBottom:
+    - what: outline
+      name: _caseOutline
+    - what: outline
+      name: _bottomKeyCutout
+      where: /matrix/
+      operation: subtract
+    - what: outline
+      name: _bottomUSBCutout
+      operation: subtract
+    - what: outline
+      name: _bottomMCUCutout
+      operation: subtract
+    - what: circle
+      radius: screwRadius
+      where: /screw/
+      operation: subtract
+    - what: circle
+      radius: standoffRadius
+      where: /screw_7/
+      operation: subtract
+
+  representation:
+    - what: outline
+      name: _caseWalls
+    - what: outline
+      name: _caseTop
+    - what: rectangle
+      size: [18, 18]
+      where: /matrix/
+      operation: stack
+
+cases:
+  _bottom:
+    - what: outline
+      name: outlineBottom
       extrude: baseHeight
     - what: outline
-      name: _standoffsBottom
-      extrude: supportHeight
+      name: _caseWalls
+      extrude: baseWallHeight
     - what: outline
-      name: _pcbSupport
-      extrude: supportHeight
-    - what: outline
-      name: _walls
-      extrude: wallHeight
-    - what: outline
-      name: _screwHoles
-      extrude: 50
+      name: _screwRecess
+      extrude: 0.6
       operation: subtract
     - what: outline
-      name: _mcuCutoutCase
-      extrude: 7
-      operation: subtract
-      shift: [0,0, baseHeight]
+      name: _standOff
+      extrude: baseHeight
     - what: outline
-      name: _trrsCutoutCase
-      extrude: 6
+      name: _mcuBuffer
+      shift: [0, 0, baseHeight]
+      extrude: 3
       operation: subtract
-      shift: [0,0, supportHeight+pcbThickness]
-  topL:
+    - what: outline
+      name: _USBCutout
+      shift: [0, 0, baseHeight+pcbThickness]
+      extrude: 3.5
+      operation: subtract
+
+  bottomLeft:
     - what: case
-      name: top
+      name: _bottom
     - what: outline
       name: _rightSubstitution
       extrude: 100
-      shift: [0,0,-50]
+      shift: [0, 0, -50]
       operation: subtract
 
-  topR:
+  bottomRight:
     - what: case
-      name: top
+      name: _bottom
     - what: outline
       name: _leftSubstitution
       extrude: 100
-      shift: [0,0,-50]
+      shift: [0, 0, -50]
       operation: subtract
 
-  bottomL:
+  _top:
+    - what: outline
+      name: _caseWalls
+      extrude: topWallHeight
+    - what: outline
+      name: _keySupportPlate
+      extrude: topWallHeight
+    - what: outline
+      name: _casePlate
+      extrude: plateThickness
+      shift: [0, 0, 2.2-plateThickness]
+    - what: outline
+      name: _screwRecessPlate
+      extrude: 0.6
+      shift: [0, 0, 2.2-0.6]
+      operation: subtract
+    - what: outline
+      name: _caseTop
+      extrude: 5+2.2
+    - what: outline
+      name: _holesTop
+      extrude: 2.5
+      operation: subtract
+    - what: outline
+      name: _mcuBuffer
+      shift: [0, 0, -pcbThickness]
+      extrude: 4.5
+      operation: subtract
+    - what: outline
+      name: _USBCutout
+      extrude: 5
+      operation: subtract
+
+  topLeft:
     - what: case
-      name: bottom
+      name: _top
     - what: outline
       name: _rightSubstitution
       extrude: 100
-      shift: [0,0,-50]
+      shift: [0, 0, -50]
       operation: subtract
 
-  bottomR:
+  topRight:
     - what: case
-      name: bottom
+      name: _top
     - what: outline
       name: _leftSubstitution
       extrude: 100
-      shift: [0,0,-50]
+      shift: [0, 0, -50]
       operation: subtract
 
 pcbs:
-  leftPCB:
+  plate:
     template: kicad8
     outlines:
-      main:
-        outline: _pcbLeft
+      - outline: _plate
     footprints:
-      sockets_chocv2:
+      mounting_holes:
+        what: ceoloide/mounting_hole_npth
+        where: /^screw/
+  pcbLeft:
+    template: kicad8
+    outlines:
+      - outline: _outlinePCBLeft
+    footprints:
+      mcu: &mcu
+        what: rp2040zero
+        where: matrix_outer_num
+        params:
+          flip: false
+          side: B
+        adjust.shift: [8.14, 10]
+        adjust.rotate: 90
+      socketsChocv2: &sockets
         what: ceoloide/switch_choc_v1_v2
         where: /^matrix/
         params:
-          choc_v1_support: false
+          choc_v1_support: true
           include_stabilizer_pad: false
           include_keycap: true
           from: "{{column_net}}"
           to: "{{colrow}}"
-      sockets_mx:
-        what: ceoloide/switch_mx
-        where: /^matrix/
-        params:
-          from: "{{column_net}}"
-          to: "{{colrow}}"
         adjust.rotate: 180
-      diode:
+      diode: &diode
         what: ceoloide/diode_tht_sod123
         where: /^matrix/
         params:
-          include_tht: true
+          include_tht: false
+          include_traces_vias: true
           from: "{{colrow}}"
           to: "{{row_net}}"
-        adjust.shift: [0, -7.75]
-        adjust.rotate: 180
-      trrs:
-        what: ceoloide/trrs_pj320a
-        params:
-          SL: GND #GND Recommended
-          R1: GP0 #UART0 TX
-          R2: GP1 #UART0 RX 
-          TP: P3V3 #3v3 (OUT) Recommended
-          side: "F"
+        adjust.shift: [-8, 1.5]
+        adjust.rotate: 270
+      usbBreakout: &usbBreakout
+        what: usb_breakout_4p
         where: matrix_inner_num
-        adjust:
-          shift: [15.75, 14]
-          rotate: 270
-      mcu-rp2040zero:
-        what: rp2040zero
         params:
-        where:
-          ref: matrix_outer_num
-          shift: [-10.5, 9.5]
-      ergogen_logo:
-        what: ceoloide/utility_ergogen_logo
-        where: matrix_middle_bottom
-        adjust: 
-          shift: [6.5, -12]
-      by_text:
-        what: ceoloide/utility_text
-        where: matrix_middle_bottom
+          P1: P3V3
+          P2: GP0
+          P3: GP1
+          P4: GND
+        adjust.shift: [0, 19.3]
+      ledFirst: &ledFirst
+        what: ceoloide/led_sk6812mini-e
+        where: matrix_outer_num
         params:
-          text: "NWSplit Rev. IV \\nby NWSteenberg"
-          align: left
-        adjust: 
-          shift: [-9, -12]
-      orientationText:
+          P1: P5V
+          P2: LED_OUT # Trust me it makes senss
+          P3: GND
+          P4: GP2
+        adjust.shift: [0, 5]
+      ledSet1: &ledSet1
+        what: ceoloide/led_sk6812mini-e
+        where: /^matrix_(index|ring|outer_top|outer_home|outer_bottom|thumb_inner)/
+        params:
+          P1: P5V
+          P2: LED_OUT
+          P3: GND
+          P4: LED_IN
+        adjust.shift: [0, 5]
+      ledSet2: &ledSet2
+        what: ceoloide/led_sk6812mini-e
+        where: /^matrix_(inner|middle|pinky|thumb_center)/
+        params:
+          P1: P5V
+          P2: LED_IN # LED_IN -> To next LED Trust me it makes sense
+          P3: GND
+          P4: LED_OUT #  LED_OUT -> To this pin
+        adjust.shift: [0, 5]
+      ledLast: &ledLast
+        what: ceoloide/led_sk6812mini-e
+        where: matrix_thumb_outer
+        params:
+          P1: P5V
+          P2: GP3
+          P3: GND
+          P4: LED_IN
+        adjust.shift: [0, 5]
+      mountingHoles: &holes
+        what: ceoloide/mounting_hole_npth
+        where: /^screw/
+      rowRoute1: &rowRoute1
+        what: ceoloide/utility_router
+        where: /^matrix/
+        params:
+          width: 0.2
+          route: "b(-8.2,3.8)(-8.2,0.2)"
+      rowRoute2: &rowRoute2
+        what: ceoloide/utility_router
+        where: /^matrix/
+        params:
+          width: 0.2
+          route: "b(-8.2,-3.2)(-8.2,-8.7)v"
+      colRoute: &colRoute
+        what: ceoloide/utility_router
+        where: /^matrix/
+        params:
+          width: 0.2
+          route: "b(4.3,6)(8.6,6)"
+      gndRoute: &gndRoute
+        what: ceoloide/utility_router
+        where: /^matrix/
+        params:
+          width: 0.2
+          route: "b(-2.7,-5.8)(-2.7,-8.1)v"
+      5vRoute: &5vRoute
+        what: ceoloide/utility_router
+        where: /^matrix/
+        params:
+          width: 0.2
+          route: "b(2.7,-4.4)(5.2,-4.4)(5.2,-6.9)v"
+      outRoute: &outRoute
+        what: ceoloide/utility_router
+        where: /^matrix/
+        params:
+          width: 0.2
+          route: "b(2.7,-5.8)(4.2,-5.8)v(6.2,-5.8)"
+      inRoute: &inRoute
+        what: ceoloide/utility_router
+        where: /^matrix/
+        params:
+          width: 0.2
+          route: "b(-2.7,-4.4)(-4.7,-4.4)v(-9.2,-4.4)"
+      orientationText: &orientationText
         what: ceoloide/utility_text
-        where: matrix_thumb_center
+        where: matrix_pinky_num
         params:
           text: "(left) ⌨"
           height: 2
           width: 2
-        adjust: 
-          shift: [0, 10.75]
-      mounting_hole1:
-        what: ceoloide/mounting_hole_npth
-        where: matrix_thumb_reach
         adjust:
-          shift: [-12, -7.5]
-      mounting_hole2:
-        what: ceoloide/mounting_hole_npth
-        where: /^matrix_inner_(num|home)/
+          shift: [0, 12]
+      byText: &byText
+        what: ceoloide/utility_text
+        where: matrix_pinky_num
+        params:
+          text: "NWSplit Rev. V \\nby NWSteenberg"
         adjust:
-          shift: [7.5, -9.5]
-      mounting_hole3:
-        what: ceoloide/mounting_hole_npth
-        where: /^matrix_outer_(num|home)/
+          shift: [0, 17]
+      ergogenLogo: &ergogenLogo
+        what: ceoloide/utility_ergogen_logo
+        where: matrix_middle_bottom
         adjust:
-          shift: [-7.5, -9.5]
-
-
-  rightPCB:
+          shift: [6.5, -12]
+  pcbRight:
     template: kicad8
     outlines:
-      main:
-        outline: _pcbRight
+      - outline: _outlinePCBRight
     footprints:
-      sockets_chocv2:
-        what: ceoloide/switch_choc_v1_v2
+      mcu:
+        <<: *mcu
+        where: mirror_matrix_outer_num
+        adjust.shift: [8.14, 10+20.38]
+      socketsChocv2:
+        <<: *sockets
         where: /^mirror_matrix/
-        params:
-          choc_v1_support: false
-          include_stabilizer_pad: false
-          include_keycap: true
-          from: "{{column_net}}"
-          to: "{{colrow}}"
-      sockets_mx:
-        what: ceoloide/switch_mx
-        where: /^mirror_matrix/
-        params:
-          from: "{{column_net}}"
-          to: "{{colrow}}"
-        adjust.rotate: 180
       diode:
-        what: ceoloide/diode_tht_sod123
+        <<: *diode
+        where: /^mirror_matrix/
+        adjust.shift: [8.25, 1.5]
+        adjust.rotate: 90
+      usbBreakout:
+        <<: *usbBreakout
+        where: mirror_matrix_inner_num
+      ledFirst:
+        <<: *ledFirst
+        where: mirror_matrix_outer_num
+        adjust.rotate: 180
+      ledSet1:
+        <<: *ledSet1
+        where: /^mirror_matrix_(index|ring|outer_top|outer_home|outer_bottom|thumb_inner)/
+        adjust.rotate: 180
+      ledSet2:
+        <<: *ledSet2
+        where: /^mirror_matrix_(inner|middle|pinky|thumb_center)/
+        adjust.rotate: 180
+      ledLast:
+        <<: *ledLast
+        where: mirror_matrix_thumb_outer
+        adjust.rotate: 180
+      mountingHoles:
+        <<: *holes
+        where: /^mirror_screw/
+      rowRoute1:
+        <<: *rowRoute1
+        where: /^mirror_matrix/
+      rowRoute2:
+        <<: *rowRoute2
+        where: /^mirror_matrix/
+      colRoute:
+        <<: *colRoute
+        where: /^mirror_matrix/
+      gndRoute:
+        <<: *gndRoute
         where: /^mirror_matrix/
         params:
-          include_tht: true
-          from: "{{colrow}}"
-          to: "{{row_net}}"
-        adjust.shift: [0, -7.75]
-        adjust.rotate: 180
-      trrs:
-        what: ceoloide/trrs_pj320a
+          width: 0.2
+          route: "b(2.7,-4.4)(5.2,-4.4)(5.2,-6.9)v"
+      5vRoute:
+        <<: *5vRoute
+        where: /^mirror_matrix/
         params:
-          SL: GND #GND Recommended
-          R1: GP0 #UART0 TX
-          R2: GP1 #UART0 RX 
-          TP: P3V3 #3v3 (OUT) Recommended
-          side: "F"
-        where: mirror_matrix_inner_num
-        adjust:
-          shift: [15.75, 14]
-          rotate: 270
-      mcu-rp2040zero:
-        what: rp2040zero
+          width: 0.2
+          route: "b(-2.7,-5.8)(-5.2,-5.8)(-5.2,-6.9)v"
+      outRoute:
+        <<: *outRoute
+        where: /^mirror_matrix/
         params:
-        where:
-          ref: mirror_matrix_outer_num
-          shift: [9.75, 9.5]
-      ergogen_logo:
-        what: ceoloide/utility_ergogen_logo
-        where: mirror_matrix_middle_bottom
-        adjust: 
-          shift: [6.5, -12]
-      by_text:
-        what: ceoloide/utility_text
-        where: mirror_matrix_middle_bottom
+          width: 0.2
+          route: "b(-2.7,-4.4)(-4.2,-4.4)v(-6.2,-4.4)"
+      inRoute:
+        <<: *inRoute
+        where: /^mirror_matrix/
         params:
-          text: "NWSplit Rev. IV \\nby NWSteenberg"
-          align: right
-        adjust: 
-          shift: [-9, -12]
+          width: 0.2
+          route: "b(2.7,-5.8)(4.2,-5.8)v(7.7,-5.8)"
       orientationText:
-        what: ceoloide/utility_text
-        where: mirror_matrix_thumb_center
+        <<: *orientationText
+        where: mirror_matrix_pinky_num
         params:
           text: "(right) ⌨"
           height: 2
           width: 2
-        adjust: 
-          shift: [0, 10.75]
-      mounting_hole1:
-        what: ceoloide/mounting_hole_npth
-        where: mirror_matrix_thumb_reach
-        adjust:
-          shift: [-12, -7.5]
-      mounting_hole2:
-        what: ceoloide/mounting_hole_npth
-        where: /^mirror_matrix_inner_(num|home)/
-        adjust:
-          shift: [7.5, -9.5]
-      mounting_hole3:
-        what: ceoloide/mounting_hole_npth
-        where: /^mirror_matrix_outer_(num|home)/
-        adjust:
-          shift: [-7.5, -9.5]  
+      byText:
+        <<: *byText
+        where: mirror_matrix_pinky_num
+      ergogenLogo:
+        <<: *ergogenLogo
+        where: mirror_matrix_middle_bottom

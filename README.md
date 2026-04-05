@@ -1,5 +1,5 @@
 # NWSplit keyboard
-NWSplit is a columnar staggered, split keyboard designed using Ergogen. Named after myself, NWS, because I suck at naming things.
+NWSplit is a columnar staggered, split keyboard designed using Ergogen.
 
 ![NWSplit Keyboard](images/nwsplit.jpg) 
 
@@ -8,10 +8,11 @@ ________________________________________
 ## Features
 
 - Columnar staggered
-- 3 key thumb clusters with a wide (1.5u) center thumb key
-- QMK and VIAL firmware
-- Hot-swappable MX and Choc V2 sockets
+- 3 key thumb cluster
+- QMK/VIAL firmware
+- Hot-swappable Choc V2 sockets
 - RP2040-zero controller
+- Per-key RGB
 - Case and PCB designed entirely in [Ergogen](https://ergogen.xyz/) 
 
 ## Repo Structure
@@ -24,6 +25,15 @@ ________________________________________
 
 ## Bill of Materials (BOM)
 \#TODO
+| Component | Description | Quantity | Comment |
+|-----------|-------------|-----|---------|
+| PCB | Gerber in release section | 2 | One right and one left (often ordered in sets of min. 5 |
+| Diode | 1N4148, SOD123 for SMD, or Through hole | 54 | |
+| Switch Sockets | Cherry MX or Kailh Choc compatible | 54 | |
+| MCU | RP2040-Zero | 2 | Firmware can be found at release section |
+| USB-C Breakout | USB Type-C 16Pin 2.54mm Female Connector Breakout | 2 | 
+| Switches | Any Kailh Choc V2 type switch without guide pin | 54 | |
+| Keycaps | Your choice | 54 | |
 
 ## Build Instructions
 \#TODO

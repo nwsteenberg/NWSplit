@@ -24,6 +24,15 @@ ________________________________________
 
 ## Bill of Materials (BOM)
 \#TODO
+| Component | Description | Quantity | Comment |
+|-----------|-------------|-----|---------|
+| PCB | Gerber in release section | 2 | One right and one left (often ordered in sets of min. 5 |
+| Diode | 1N4148, SOD123 for SMD, or Through hole | 54 | |
+| Switch Sockets | Cherry MX or Kailh Choc compatible | 54 | |
+| MCU | RP2040-Zero | 2 | Firmware can be found at release section |
+| TRRS | PJ-320A | 2 | |
+| Switches | Cherry MX or Kailh Choc V2 | 54 | |
+| Keycaps | Your choice | 54 | |
 
 ## Build Instructions
 \#TODO

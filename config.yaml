@@ -593,7 +593,7 @@ pcbs:
           from: "{{colrow}}"
           to: "{{row_net}}"
         adjust.shift: [-8.25, 1.5]
-        adjust.rotate: 90
+        adjust.rotate: 270
       trrs: &trrs
         what: ceoloide/trrs_pj320a
         where: matrix_inner_num
@@ -642,6 +642,41 @@ pcbs:
       mountingHoles: &holes
         what: ceoloide/mounting_hole_npth
         where: /^screw/
+      rowRoute1: &rowRoute1
+        what: ceoloide/utility_router
+        where: /^matrix/
+        params:
+          route: "b(-8.2,3.8)(-8.2,0.2)"
+      rowRoute2: &rowRoute2
+        what: ceoloide/utility_router
+        where: /^matrix/
+        params:
+          route: "b(-8.2,-3.2)(-8.2,-8.7)v"
+      colRoute: &colRoute
+        what: ceoloide/utility_router
+        where: /^matrix/
+        params:
+          route: "b(4.3,6)(8.6,6)v"
+      gndRoute: &gndRoute
+        what: ceoloide/utility_router
+        where: /^matrix/
+        params:
+          route: "b(-2.7,-5.8)(-2.7,-8.1)v"
+      5vRoute: &5vRoute
+        what: ceoloide/utility_router
+        where: /^matrix/
+        params:
+          route: "b(2.7,-4.4)(5.2,-4.4)(5.2,-6.9)v"
+      outRoute: &outRoute
+        what: ceoloide/utility_router
+        where: /^matrix/
+        params:
+          route: "b(2.7,-5.8)(4.2,-5.8)v(6.2,-5.8)v"
+      inRoute: &inRoute
+        what: ceoloide/utility_router
+        where: /^matrix/
+        params:
+          route: "b(-2.7,-4.4)(-4.7,-4.4)v(-9.2,-4.4)v"
   pcbRight:
     template: kicad8
     outlines:
@@ -658,6 +693,7 @@ pcbs:
         <<: *diode
         where: /^mirror_matrix/
         adjust.shift: [8.25, 1.5]
+        adjust.rotate: 90
       trrs:
         <<: *trrs
         where: mirror_matrix_inner_num
@@ -676,3 +712,24 @@ pcbs:
       mountingHoles:
         <<: *holes
         where: /^mirror_screw/
+      rowRoute1:
+        <<: *rowRoute1
+        where: /^mirror_matrix/
+      rowRoute2:
+        <<: *rowRoute2
+        where: /^mirror_matrix/
+      colRoute:
+        <<: *colRoute
+        where: /^mirror_matrix/
+      gndRoute:
+        <<: *gndRoute
+        where: /^mirror_matrix/
+      5vRoute:
+        <<: *5vRoute
+        where: /^mirror_matrix/
+      outRoute:
+        <<: *outRoute
+        where: /^mirror_matrix/
+      inRoute:
+        <<: *inRoute
+        where: /^mirror_matrix/

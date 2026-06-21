@@ -519,7 +519,7 @@ cases:
       operation: subtract
     - what: outline
       name: _caseTop
-      extrude: 5+2.2
+      extrude: fromPlateToTop+2.2
     - what: outline
       name: _holesTop
       extrude: 2.5
@@ -677,6 +677,27 @@ pcbs:
         where: /^matrix/
         params:
           route: "b(-2.7,-4.4)(-4.7,-4.4)v(-9.2,-4.4)v"
+      orientationText: &orientationText
+        what: ceoloide/utility_text
+        where: matrix_pinky_num
+        params:
+          text: "(left) ⌨"
+          height: 2
+          width: 2
+        adjust:
+          shift: [0, 12]
+      byText: &byText
+        what: ceoloide/utility_text
+        where: matrix_pinky_num
+        params:
+          text: "NWSplit Rev. V \\nby NWSteenberg"
+        adjust:
+          shift: [0, 17]
+      ergogenLogo: &ergogenLogo
+        what: ceoloide/utility_ergogen_logo
+        where: matrix_middle_bottom
+        adjust:
+          shift: [6.5, -12]
   pcbRight:
     template: kicad8
     outlines:
@@ -733,3 +754,16 @@ pcbs:
       inRoute:
         <<: *inRoute
         where: /^mirror_matrix/
+      orientationText:
+        <<: *orientationText
+        where: mirror_matrix_pinky_num
+        params:
+          text: "(right) ⌨"
+          height: 2
+          width: 2
+      byText:
+        <<: *byText
+        where: mirror_matrix_pinky_num
+      ergogenLogo:
+        <<: *ergogenLogo
+        where: mirror_matrix_middle_bottom

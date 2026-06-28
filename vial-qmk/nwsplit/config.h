@@ -8,8 +8,8 @@
 #define SERIAL_USART_RX_PIN GP1
 #define SERIAL_USART_PIN_SWAP
 
-#define RGB_DI_PIN GP2
-#define RGB_DO_PIN GP3
+#define WS2812_DI_PIN GP2
+#define WS2812_DO_PIN GP3
 #define RGB_MATRIX_LED_COUNT 54   // total LEDs across both halves
 #define RGB_MATRIX_SPLIT
 #define SPLIT_TRANSPORT_MIRROR

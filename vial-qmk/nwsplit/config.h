@@ -11,7 +11,6 @@
 #define WS2812_DI_PIN GP2
 #define WS2812_DO_PIN GP3
 #define RGB_MATRIX_LED_COUNT 54   // total LEDs across both halves
-#define RGB_MATRIX_SPLIT
 #define SPLIT_TRANSPORT_MIRROR
 #define RGB_MATRIX_SPLIT_LEFT 27
 #define RGB_MATRIX_SPLIT_RIGHT 27

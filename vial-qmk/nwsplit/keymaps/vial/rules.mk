@@ -3,3 +3,6 @@ VIAL_ENABLE = yes
 RGB_MATRIX_ENABLE = yes
 RGB_MATRIX_DRIVER = ws2812
 VIALRGB_ENABLE = yes
+# Use the vendor WS2812 driver for RP2040
+WS2812_ENABLE = yes
+WS2812_DRIVER = vendor

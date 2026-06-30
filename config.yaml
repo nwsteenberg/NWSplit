@@ -639,36 +639,43 @@ pcbs:
         what: ceoloide/utility_router
         where: /^matrix/
         params:
+          width: 0.2
           route: "b(-8.2,3.8)(-8.2,0.2)"
       rowRoute2: &rowRoute2
         what: ceoloide/utility_router
         where: /^matrix/
         params:
+          width: 0.2
           route: "b(-8.2,-3.2)(-8.2,-8.7)v"
       colRoute: &colRoute
         what: ceoloide/utility_router
         where: /^matrix/
         params:
+          width: 0.2
           route: "b(4.3,6)(8.6,6)"
       gndRoute: &gndRoute
         what: ceoloide/utility_router
         where: /^matrix/
         params:
+          width: 0.2
           route: "b(-2.7,-5.8)(-2.7,-8.1)v"
       5vRoute: &5vRoute
         what: ceoloide/utility_router
         where: /^matrix/
         params:
+          width: 0.2
           route: "b(2.7,-4.4)(5.2,-4.4)(5.2,-6.9)v"
       outRoute: &outRoute
         what: ceoloide/utility_router
         where: /^matrix/
         params:
+          width: 0.2
           route: "b(2.7,-5.8)(4.2,-5.8)v(6.2,-5.8)"
       inRoute: &inRoute
         what: ceoloide/utility_router
         where: /^matrix/
         params:
+          width: 0.2
           route: "b(-2.7,-4.4)(-4.7,-4.4)v(-9.2,-4.4)"
       orientationText: &orientationText
         what: ceoloide/utility_text
@@ -714,15 +721,19 @@ pcbs:
       ledFirst:
         <<: *ledFirst
         where: mirror_matrix_outer_num
+        adjust.rotate: 180
       ledSet1:
         <<: *ledSet1
-        where: /^mirror_matrix_(index|ring|outer_top|outer_home|outer_bottom|thumb_center)/
+        where: /^mirror_matrix_(index|ring|outer_top|outer_home|outer_bottom|thumb_inner)/
+        adjust.rotate: 180
       ledSet2:
         <<: *ledSet2
-        where: /^mirror_matrix_(inner|middle|pinky|thumb_inner)/
+        where: /^mirror_matrix_(inner|middle|pinky|thumb_center)/
+        adjust.rotate: 180
       ledLast:
         <<: *ledLast
         where: mirror_matrix_thumb_outer
+        adjust.rotate: 180
       mountingHoles:
         <<: *holes
         where: /^mirror_screw/
@@ -738,15 +749,27 @@ pcbs:
       gndRoute:
         <<: *gndRoute
         where: /^mirror_matrix/
+        params:
+          width: 0.2
+          route: "b(2.7,-4.4)(5.2,-4.4)(5.2,-6.9)v"
       5vRoute:
         <<: *5vRoute
         where: /^mirror_matrix/
+        params:
+          width: 0.2
+          route: "b(-2.7,-5.8)(-5.2,-5.8)(-5.2,-6.9)v"
       outRoute:
         <<: *outRoute
         where: /^mirror_matrix/
+        params:
+          width: 0.2
+          route: "b(-2.7,-4.4)(-4.2,-4.4)v(-6.2,-4.4)"
       inRoute:
         <<: *inRoute
         where: /^mirror_matrix/
+        params:
+          width: 0.2
+          route: "b(2.7,-5.8)(4.2,-5.8)v(7.7,-5.8)"
       orientationText:
         <<: *orientationText
         where: mirror_matrix_pinky_num

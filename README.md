@@ -1,5 +1,5 @@
 # NWSplit keyboard
-NWSplit is a columnar staggered, split keyboard designed using Ergogen.
+NWSplit is a 6x4+3 keys colum-staggered split keyboard designed in Ergogen. Inspiration from [achyudh/karma](https://github.com/achyudh/karma), [christianselig/caldera](https://christianselig.com/2024/07/caldera-keyboard/) and [carrefinho/forager](https://github.com/carrefinho/forager) 
 
 ![NWSplit Keyboard](images/nwsplit.jpg) 
 
@@ -7,11 +7,9 @@ ________________________________________
 
 ## Features
 
-- Columnar staggered
-- 3 key thumb cluster
 - QMK/VIAL firmware
-- Hot-swappable Choc V2 sockets
-- RP2040-zero controller
+- Hot-swap Kailh Choc v1/v2 support
+- Somewhat hidden RP2040-zero controller
 - Per-key RGB
 - Case and PCB designed entirely in [Ergogen](https://ergogen.xyz/) 
 

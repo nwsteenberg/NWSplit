@@ -591,7 +591,7 @@ pcbs:
         what: usb_breakout_4p
         where: matrix_inner_num
         params:
-          P1: P3V3
+          P1: P5V
           P2: GP0
           P3: GP1
           P4: GND

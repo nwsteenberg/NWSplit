@@ -6,10 +6,9 @@ NWSplit is a 6x4+3 keys colum-staggered split keyboard designed in Ergogen. Insp
 ________________________________________
 
 ## Features
-
 - QMK/VIAL firmware
 - Hot-swap Kailh Choc v1/v2 support
-- Somewhat hidden RP2040-zero controller
+- Wired and wireless version
 - Per-key RGB
 - Case and PCB designed entirely in [Ergogen](https://ergogen.xyz/) 
 
@@ -22,16 +21,20 @@ ________________________________________
 - `config.yaml` - Ergogen configuration file for the keyboard design
 
 ## Bill of Materials (BOM)
-\#TODO
 | Component | Description | Quantity | Comment |
 |-----------|-------------|-----|---------|
-| PCB | Gerber in release section | 2 | One right and one left (often ordered in sets of min. 5 |
-| Diode | 1N4148, SOD123 for SMD, or Through hole | 54 | |
-| Switch Sockets | Cherry MX or Kailh Choc compatible | 54 | |
-| MCU | RP2040-Zero | 2 | Firmware can be found at release section |
-| USB-C Breakout | USB Type-C 16Pin 2.54mm Female Connector Breakout | 2 | 
+| PCB | Gerber in release section | 2 | One right and one left (often ordered in sets of min. 5) |
+| Diode | 1N4148, SOD123 | 54 | |
+| MCU | Pro Micro RP2040 (I.e. Sparkfun Pro Micro - 2040) | 2 | Wired only |
+| MCU | Supermini nRF52840 | 2 | Wireless only |
+| USB-C 16Pin | USB Type-C 16Pin 2.54mm Female recepticle | 2 | Wired only |  
+| Power Switch | Your choice. | 54 | Wireless only |
+| Reset Switch | Panasonic EVQ-PU[A|C|J|L]02K | 54 | Wireless only |
+| JST Connector | Your choice. | 54 | Wireless only |
+| Switch Hotswap Sockets | Kailh Choc V1/V2 compatible | 54 | |
 | Switches | Any Kailh Choc V2 type switch without guide pin | 54 | |
-| Keycaps | Your choice | 54 | |
+| Keycaps | Your choice. | 54 | 
+| Magnetic Pogo Connector | Your choice. | 54 | Used for experimentation - not needed |
 
 ## Build Instructions
 \#TODO

@@ -1,8 +1,14 @@
 # NWSplit keyboard
 NWSplit is a 6x4+3 keys colum-staggered split keyboard designed in Ergogen. Inspiration from [achyudh/karma](https://github.com/achyudh/karma), [christianselig/caldera](https://christianselig.com/2024/07/caldera-keyboard/) and [carrefinho/forager](https://github.com/carrefinho/forager) 
 
+The goal was to create a keyboard for me. Through various iterations i have come up with the following design.
+
 ![NWSplit Keyboard](images/nwsplit.jpg) 
 
+## TODO
+- [ ] Build Instructions
+- [ ] ZMK Firmware
+- [ ] Expansions (Screen, Pointing Device etc.)
 ________________________________________
 
 ## Features
@@ -11,7 +17,7 @@ ________________________________________
 - Wired and wireless version
 - Per-key RGB
 - Case and PCB designed entirely in [Ergogen](https://ergogen.xyz/) 
-
+________________________________________
 ## Repo Structure
 - `footprints/` - Custom footprints used in the PCB design in Ergogen
 - `gerbers/` - Gerber files for manufacturing the PCBs
@@ -28,9 +34,11 @@ ________________________________________
 | MCU | Pro Micro RP2040 (I.e. Sparkfun Pro Micro - 2040) | 2 | Wired only |
 | MCU | Supermini nRF52840 | 2 | Wireless only |
 | USB-C 16Pin | USB Type-C 16Pin 2.54mm Female recepticle | 2 | Wired only |  
-| Power Switch | Your choice. | 54 | Wireless only |
-| Reset Switch | Panasonic EVQ-PU[A|C|J|L]02K | 54 | Wireless only |
-| JST Connector | Your choice. | 54 | Wireless only |
+| LED | SK6912 MINI-E | 54 | Optional if you want per-key RGB |
+| Power Switch | MSK12C02 | 2 | Wireless only |
+| Reset Switch | Panasonic EVQ-PUC02K | 2 | Wireless only |
+| JST Connector | 2 Pin PH2.0 JST Male | 2 | Wireless only |
+| JST Connector | 2 Pin PH2.0 JST Female 90° | 2 | Wireless only |
 | Switch Hotswap Sockets | Kailh Choc V1/V2 compatible | 54 | |
 | Switches | Any Kailh Choc V2 type switch without guide pin | 54 | |
 | Keycaps | Your choice. | 54 | 

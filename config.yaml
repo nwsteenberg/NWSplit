@@ -818,6 +818,7 @@ pcbs:
       reset: 
         <<: *reset
         where: mirror_matrix_outer_num
+        adjust.rotate: 270
       power: 
         <<: *power
         where: mirror_matrix_outer_top

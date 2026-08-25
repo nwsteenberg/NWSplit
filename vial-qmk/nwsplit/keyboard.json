@@ -13,7 +13,7 @@
     "rgb_matrix": true
   },
   "ws2812": {
-    "pin": "GP2",
+    "pin": "GP7",
     "driver": "vendor"
   },
   "bootmagic": {

@@ -697,7 +697,7 @@ pcbs:
         what: ceoloide/mounting_hole_npth
         where: /^screw/
       expansion: 
-        what: pin_header_6pin_2.54
+        what: pin_header_6pin
         where: matrix_inner_home
         params:
           P1: P3V3

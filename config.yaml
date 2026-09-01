@@ -7,10 +7,10 @@ units:
   keyCutoutDimentions: 13.95
 
   # Case
-  baseHeight: 2
+  baseHeight: 3
   screwRadius: 1.1 # M2 + 0.2mm buffer
-  screwHoleRadius: 0.85
-  screwHoleWallThickness: 3
+  screwHoleRadius: 1.55
+  screwHoleWallThickness: 2
   screwHeadRadius: 2.1 # 4mm + 0.2mm buffer
   fromPlateToTop: 5
 
@@ -24,27 +24,28 @@ points:
       anchor:
         shift: [40, -180] # Move into KiCAD position
       columns:
-        outer.key.column_net: "P21" # "GP29"
+        outer.key.column_net: "GP29"
+        outer.rows.bottom.skip: true
 
-        pinky.key.column_net: "P20" # "GP28"
-        pinky.key.stagger: 0.1U
+        pinky.key.column_net: "GP28"
+        pinky.key.stagger: 0.4U
 
-        ring.key.column_net: "P19" # "GP27" 
+        ring.key.column_net: "GP27"
         ring.key.stagger: 0.6U
 
-        middle.key.column_net: "P18" # "GP26"
+        middle.key.column_net: "GP26"
         middle.key.stagger: 0.2U
 
-        index.key.column_net: "P15" # "GP22"
+        index.key.column_net: "GP15"
         index.key.stagger: -0.25U
 
-        inner.key.column_net: "P14" # "GP20"
+        inner.key.column_net: "GP14"
         inner.key.stagger: -0.2U
       rows:
-        bottom.row_net: "P5" # "GP5"
-        home.row_net: "P4" # "GP4"
-        top.row_net: "P3" # "GP3"
-        num.row_net: "P2" # "GP2"
+        bottom.row_net: "GP12"
+        home.row_net: "GP11"
+        top.row_net: "GP10"
+        num.row_net: "GP9"
     thumb:
       anchor:
         ref: matrix_index_bottom
@@ -52,21 +53,21 @@ points:
       columns:
         inner:
           key.name: matrix_thumb_inner
-          key.column_net: "P18" # "GP26"
+          key.column_net: "GP26"
           key.origin: [-0.5U, -0.5U]
         center:
           key.name: matrix_thumb_center
-          key.column_net: "P15" # "GP22"
+          key.column_net: "GP15"
           key.splay: -15
           key.origin: [-0.5U, -0.5U]
         outer:
           key.name: matrix_thumb_outer
-          key.column_net: "P14" # "GP20"
+          key.column_net: "GP14"
           key.splay: -10
           key.origin: [-0.5U, -0.5U]
       rows:
         only:
-          row_net: "P6" # "GP6"
+          row_net: "GP13"
     screw_1:
       anchor:
         - ref: matrix_inner_bottom
@@ -77,24 +78,26 @@ points:
           shift: [13, 21.5]
     screw_3:
       anchor:
-        - ref: matrix_ring_num
-          shift: [-17, 16.25]
+        - ref: matrix_inner_num
+          shift: [-5U-13, 21.5]
     screw_4:
       anchor:
-        - ref: matrix_outer_num
-          shift: [-13, 10.5]
+        - ref: matrix_outer_home
+          shift: [-13, -24]
     screw_5:
       anchor:
-        - ref: matrix_outer_bottom
-          shift: [-13, -13]
-    screw_6:
-      anchor:
         - ref: matrix_middle_bottom
-          shift: [6, -13]
-    screw_7:
+          shift: [0, -24]
+    screw_thumb:
       anchor:
         - ref: matrix_thumb_outer
           shift: [8.5, 8.5]
+    knob:
+      anchor:
+        - ref: matrix_pinky_num
+          shift: [-0U, 1U]
+      columns.only.key.column_net: "GP28"
+      rows.only.row_net: "GP8"
   mirror:
     ref: matrix_pinky_home
     distance: 270
@@ -102,6 +105,10 @@ outlines:
   _keysCutout:
     - what: rectangle
       size: [keyCutoutDimentions, keyCutoutDimentions]
+      fillet: 0.1
+  _knobCutout:
+    - what: rectangle
+      size: [14, 15]
       fillet: 0.1
 
   _rightSubstitution:
@@ -121,103 +128,164 @@ outlines:
       size: [16.5, 15.5]
       adjust.shift: [-1.5, -1]
       fillet: 4
-
-  _bottomMCUCutout:
+  
+  _bottomKnobCutout:
     - what: rectangle
-      size: [30, 2.2]
-      where: /matrix_outer_num/
-      adjust.shift: [1.5, 31.1]
+      size: [7, 1.5]
+      adjust.shift: [0,7.5]
+      fillet: 0.5
     - what: rectangle
-      size: [30, 2.2]
-      where: /matrix_outer_num/
-      adjust.shift: [1.5, 15.9]
+      size: [7, 1.5]
+      adjust.shift: [0,-7]
+      fillet: 0.5
+    - what: rectangle
+      size: [2.3, 3]
+      adjust.shift: [5.6,0]
+      fillet: 0.5
+    - what: rectangle
+      size: [2.3, 3]
+      adjust.shift: [-5.6,0]
       fillet: 0.5
 
-  _bottomUSBCutout:
+  _MCUPCBCutout:
     - what: rectangle
-      size: [10, 2.2]
+      size: [13, 20.5]
+      where: /matrix_outer_num/
+      adjust.shift: [-1, 27.24+3]
+  _MCUTopCutout:
+    - what: rectangle
+      size: [13, 5]
+      where: /matrix_outer_num/
+      adjust.shift: [-1, 27.24-4.35]
+      operation: stack
+    - what: rectangle
+      size: [9.5, 12]
+      where: /matrix_outer_num/
+      adjust.shift: [-1, 27.24+10.75]
+      expand: 0.1
+      operation: stack
+  _MCUBottomCutout:
+    - what: rectangle
+      size: [18.5, 24]
+      where: /matrix_outer_num/
+      adjust.shift: [-1, 27.24]
+  _MCUUSBCutout:
+    - what: rectangle
+      size: [9.5, 20]
+      where: /matrix_outer_num/
+      adjust.shift: [-1, 27.24+10]
+  _USBSerialCutout:
+    - what: rectangle
+      size: [10, 8.5]
       where: /matrix_inner_num/
-      adjust.shift: [0, 13.1]
-      fillet: 0.5
-
-  _bottomResetPowerAndJSTCutout:
+      adjust: &usbPosition
+        shift: [0, 22.5]
+        rotate: 180
     - what: rectangle
-      size: [5.5, 7.5]
-      where: /matrix_outer_num/
-      adjust.shift: [-15, 0]
+      where: /matrix_inner_num/
+      size: [10, 10]
+      adjust: 
+        shift: [0, 30]
+
+  _expansionCutout:
     - what: rectangle
-      size: [6, 9]
-      where: /matrix_outer_top/
-      adjust.shift: [-15, 0]
+      size: [2.54, 23]
+      where: /matrix_inner_home/
+      adjust.shift: [13,-9]
+      expand: 0.5
+
+  _expansionCutoutTopCase:
     - what: rectangle
-      size: [2, 3.5]
-      where: /matrix_pinky_bottom/
-      adjust.shift: [-4, -14.5]
-      fillet: 0.5
+      size: [2.54+10, 23]
+      where: /matrix_inner_home/
+      adjust.shift: [13+5,-9]
+      expand: 0.5
 
-  _mcuBuffer:
+  _PCBCutouts:
+    - what: outline
+      name: _MCUPCBCutout
+    
+  _bottomCutout:
+    - what: outline
+      name: _bottomKeyCutout
+      where: /matrix/
+    - what: outline
+      name: _bottomKnobCutout
+      where: /knob/
+    - what: outline
+      name: _expansionCutout
+  
+  _knobRotaryCutout:
+    - what: circle
+      radius: 10
+      where: /knob/
+  _knobStickCutout:
+    - what: circle
+      radius: 4
+      where: /knob/
+  _knobBaseCutout:
+    - what: outline
+      name: _knobCutout
+      where: /knob/
+  _knobCutoutExtraAtKeys:
     - what: rectangle
-      size: [34.5, 21]
-      where: /matrix_outer_num/
-      adjust.shift: [0, 24.5]
-      fillet: 0.5
-
-  _batteryCutoutPCB:
-    - what: rectangle
-      size: [34, 18.5]
-      where: /matrix_ring_bottom/
-      adjust.shift: [9.5, -20.75]
-
-  _holesTop:
-    - what: circle
-      radius: screwHoleRadius
-      where: /screw/
-    - what: circle
-      radius: screwRadius
-      where: /screw_7/
-
-  _holesBottom:
-    - what: circle
-      radius: screwRadius
-      where: /screw/
-    - what: circle
-      radius: screwRadius+1
-      where: /screw_7/
-      operation: subtract
-    - what: circle
-      radius: screwHoleRadius
-      where: /screw_7/
-
+      size: [10, 10]
+      where: /knob/
+      adjust.shift: [5,-5]
   _screwRecess:
     - what: circle
       radius: screwHeadRadius
       where: /screw/
     - what: circle
       radius: screwHeadRadius+1
-      where: /screw_7/
+      where: /screw_thumb/
       operation: subtract
 
   _screwRecessPlate:
     - what: circle
       radius: screwHeadRadius
-      where: /screw_7/
+      where: /screw_thumb/
+  
+  _holesBottom:
+    - what: circle
+      radius: screwRadius
+      where: /screw/
+    - what: circle
+      radius: screwRadius+1
+      where: /screw_thumb/
+      operation: subtract
+    - what: circle
+      radius: screwHoleRadius
+      where: /screw_thumb/
+  
+  _holesTop:
+    - what: circle
+      radius: screwHoleRadius
+      where: /screw/
+    - what: circle
+      radius: screwHoleRadius +1
+      operation: subtract
+      where: /screw_thumb/
+    - what: circle
+      radius: screwRadius
+      where: /screw_thumb/
 
   _standOff:
     - what: circle
       radius: screwHoleRadius
       expand: screwHoleWallThickness
-      where: /screw_7/
+      where: /screw_thumb/
     - what: circle
       radius: screwHoleRadius
       operation: subtract
-      where: /screw_7/
+      where: /screw_thumb/
 
   # Main outline
   _outline:
     - what: polygon
       points:
-        - ref: matrix_outer_bottom
-          shift: [-0.8U, -0.8U]
+        - ref: matrix_pinky_bottom
+          shift: [-1.8U, -0.8U]
         - ref: matrix_middle_num
           shift: [-3.8U, 0.8U]
         - ref: matrix_middle_num
@@ -228,12 +296,16 @@ outlines:
           shift: [-1U, 0.5U]
         - ref: matrix_thumb_outer
           shift: [0.5U, 0.5U]
-        - ref: matrix_outer_bottom
-          shift: [3.5U, -0.8U]
+        - ref: matrix_thumb_outer
+          shift: [0.5U, -0.5U]
+        - ref: matrix_thumb_inner
+          shift: [-0.5U, 0.5U]
+        - ref: matrix_pinky_bottom
+          shift: [2.5U, -0.8U]
     - what: polygon
       points:
-        - ref: mirror_matrix_outer_bottom
-          shift: [-0.8U, -0.8U]
+        - ref: mirror_matrix_pinky_bottom
+          shift: [-1.8U, -0.8U]
         - ref: mirror_matrix_middle_num
           shift: [-3.8U, 0.8U]
         - ref: mirror_matrix_middle_num
@@ -244,8 +316,12 @@ outlines:
           shift: [-1U, 0.5U]
         - ref: mirror_matrix_thumb_outer
           shift: [0.5U, 0.5U]
-        - ref: mirror_matrix_outer_bottom
-          shift: [3.5U, -0.8U]
+        - ref: mirror_matrix_thumb_outer
+          shift: [0.5U, -0.5U]
+        - ref: mirror_matrix_thumb_inner
+          shift: [-0.5U, 0.5U]
+        - ref: mirror_matrix_pinky_bottom
+          shift: [2.5U, -0.8U]
       fillet: 0.5
     # Around keys
     - what: rectangle
@@ -254,93 +330,17 @@ outlines:
       expand: outlinePadding
       fillet: 0.5
 
-  _topComponentCutouts:
-    # JST
-    - what: rectangle
-      size: [18, 6.5]
-      where: /matrix_pinky_bottom/
-      adjust.shift: [3.2, -14.5]
-    # Battery
-    - what: outline
-      name: _batteryCutoutPCB
-      fillet: 0.5
-    # MCU
-    - what: outline
-      name: _mcuBuffer
-    # Remove space outside of outline
-    - what: outline
-      name: _outline
-      operation: intersect
-    
-  _topUSBConnectors:
-    # Serial usb
-    - what: rectangle
-      size: [10.5, 12.5]
-      where: /matrix_inner_num/
-      adjust.shift: [0, 22.1]
-    # MCU usb
-    - what: rectangle
-      size: [12.5, 10.5]
-      where: /matrix_outer_num/
-      adjust.shift: [-13.5, 23.5]
-    
-  _bottomButtonCutouts:
-    # Power
-    - what: rectangle
-      size: [10, 3]
-      where: /matrix_outer_num/
-      adjust.shift: [-17.25, 0]
-    # Reset
-    - what: rectangle
-      size: [10, 4]
-      where: /matrix_outer_top/
-      adjust.shift: [-17, 0]
-
   _outlinePCB:
     - what: outline
       name: _outline
     - what: outline
-      name: _batteryCutoutPCB
+      name: _PCBCutouts
       operation: subtract
       fillet: 0.5
-
-  _outlinePCBLeft:
-    - what: outline
-      name: _outlinePCB
     - what: outline
       name: _rightSubstitution
       operation: subtract
 
-  _outlinePCBRight:
-    - what: outline
-      name: _outlinePCB
-    - what: outline
-      name: _leftSubstitution
-      operation: subtract
-
-  _outlinePlate:
-    - what: outline
-      name: _outline
-      # USB cutout
-    - what: outline
-      name: _topUSBConnectors
-      operation: subtract
-      # MCU Cutout
-    - what: outline
-      name: _mcuBuffer
-      operation: subtract
-      fillet: 0.5
-    - what: outline
-      name: _keysCutout
-      operation: subtract
-      where: /matrix/
-
-  plate:
-    - what: outline
-      name: _outlinePlate
-    - what: outline
-      name: _rightSubstitution
-      operation: subtract
 
   # Case Outlines
   _caseOutline:
@@ -408,9 +408,9 @@ outlines:
     - what: polygon
       points:
         - ref: matrix_thumb_inner
-          shift: [-20, -5.96]
+          shift: [-20, -4.05]
         - ref: matrix_thumb_inner
-          shift: [0, -5.96]
+          shift: [0, -4.05]
         - ref: matrix_thumb_inner
           shift: [0, 0]
         - ref: matrix_inner_bottom
@@ -450,9 +450,9 @@ outlines:
     - what: polygon
       points:
         - ref: mirror_matrix_thumb_inner
-          shift: [-20, -5.96]
+          shift: [-20, -4.05]
         - ref: mirror_matrix_thumb_inner
-          shift: [0, -5.96]
+          shift: [0, -4.05]
         - ref: mirror_matrix_thumb_inner
           shift: [0, 0]
         - ref: mirror_matrix_inner_bottom
@@ -472,17 +472,7 @@ outlines:
     - what: outline
       name: _caseOutline
     - what: outline
-      name: _bottomKeyCutout
-      where: /matrix/
-      operation: subtract
-    - what: outline
-      name: _bottomUSBCutout
-      operation: subtract
-    - what: outline
-      name: _bottomMCUCutout
-      operation: subtract
-    - what: outline
-      name: _bottomResetPowerAndJSTCutout
+      name: _bottomCutout
       operation: subtract
 
   representation:
@@ -494,23 +484,39 @@ outlines:
       size: [18, 18]
       where: /matrix/
       operation: stack
+    - what: circle
+      radius: 9
+      where: /^knob/
+      operation: stack
+    - what: circle
+      radius: 10
+      where: /^knob/
+      operation: stack
 
 cases:
+  _knobNegative:
+    - what: outline
+      name: _knobBaseCutout
+      extrude: 6.5
+    - what: outline
+      name: _knobStickCutout
+      extrude: 15
+    - what: outline
+      name: _knobRotaryCutout
+      extrude: 20
+      shift: [0, 0, 6]
+    - what: outline
+      name: _knobCutoutExtraAtKeys
+      extrude: 20
+      shift: [0, 0, 6]
+
   _bottom:
     - what: outline
       name: _outlineBottom
       extrude: baseHeight+1
     - what: outline
-      name: _batteryCutoutPCB
-      operation: subtract
-      extrude: 20
-    - what: outline
       name: _caseWalls
       extrude: baseWallHeight+1
-    - what: outline
-      name: _bottomButtonCutouts
-      extrude: baseHeight+1
-      operation: subtract
     - what: outline
       name: _caseOutline
       extrude: 1
@@ -525,10 +531,20 @@ cases:
       name: _holesBottom
       extrude: 20
       operation: subtract
+    - what: outline
+      name: _screwRecessPlate # Cover up the thumb standoff
+      extrude: 1
 
   bottomLeft:
     - what: case
       name: _bottom
+
+    - what: outline
+      name: _MCUBottomCutout
+      extrude: 3
+      operation: subtract
+      shift: [0,0,baseHeight+1-3]
+
     - what: outline
       name: _rightSubstitution
       extrude: 100
@@ -538,13 +554,20 @@ cases:
   bottomRight:
     - what: case
       name: _bottom
+
+    - what: outline
+      name: _MCUTopCutout
+      extrude: 3.5
+      operation: subtract
+      shift: [0,0,baseHeight+pcbThickness+1-3.5]
+
     - what: outline
       name: _leftSubstitution
       extrude: 100
       shift: [0, 0, -50]
       operation: subtract
 
-  _top:
+  _top: # plane is pcb top
     - what: outline
       name: _caseWalls
       extrude: topWallHeight
@@ -565,22 +588,27 @@ cases:
       extrude: 5+2.2
     - what: outline
       name: _holesTop
-      extrude: 3.5+2.2
+      extrude: 4.5
       operation: subtract
-      shift: [0, 0, -pcbThickness]
+      shift: [0, 0, 0]
     - what: outline
-      name: _topComponentCutouts
-      shift: [0, 0, -pcbThickness]
-      extrude: pcbThickness+4.5
-      operation: subtract
-    - what: outline
-      name: _topUSBConnectors
-      extrude: 4
+      name: _USBSerialCutout
+      extrude: 3
       operation: subtract
 
   topLeft:
     - what: case
       name: _top
+
+    - what: outline
+      name: _MCUTopCutout
+      extrude: 3.5
+      operation: subtract
+
+    - what: case
+      name: _knobNegative
+      operation: subtract
+
     - what: outline
       name: _rightSubstitution
       extrude: 100
@@ -590,6 +618,17 @@ cases:
   topRight:
     - what: case
       name: _top
+
+    - what: outline
+      name: _MCUBottomCutout
+      extrude: 3
+      operation: subtract
+
+    - what: outline
+      name: _expansionCutoutTopCase
+      extrude: 4.5
+      operation: subtract
+
     - what: outline
       name: _leftSubstitution
       extrude: 100
@@ -597,172 +636,142 @@ cases:
       operation: subtract
 
 pcbs:
-  plate:
+  pcb:
     template: kicad8
     outlines:
-      - outline: plate
+      - outline: _outlinePCB
     footprints:
-      mounting_holes:
-        what: ceoloide/mounting_hole_npth
-        where: /^screw/
-  pcbLeft:
-    template: kicad8
-    outlines:
-      - outline: _outlinePCBLeft
-    footprints:
-      mcu: &mcu
-        what: promicro
+      MCU: 
+        what: rp2040zero
         where: matrix_outer_num
-        adjust.shift: [1.5, 23.5]
-      socketsChocv2: &sockets
+        params:
+          flip: false
+          side: B
+          GP0: SERIAL_DATA
+          GP1: LED_IN
+        adjust.shift: [-11.14, 14.68]
+      usb_serial:
+        what: usc_c_6pin_receptacle
+        where: matrix_inner_num
+        params:
+          GND: GND
+          VCC: P5V
+          CC1: SERIAL_DATA
+          CC2: SERIAL_DATA
+        adjust: *usbPosition
+      socketsChocv2: 
         what: ceoloide/switch_choc_v1_v2
         where: /^matrix/
         params:
+          reversible: true
           choc_v1_support: true
           include_stabilizer_pad: false
           include_keycap: true
           from: "{{column_net}}"
           to: "{{colrow}}"
         adjust.rotate: 180
-      diode: &diode
+      knob:
+        what: ceoloide/rotary_encoder_ec11_ec12
+        where: /^knob/
+        params:
+          reversible: true
+          include_plate_hole_marking: true
+          S1: "{{column_net}}"
+          S2: "{{row_net}}"
+          A: GP2 #A Pin in schematics
+          B: GND #C Pin
+          C: GP3 #B Pin 
+        adjust.rotate: 180
+      diode:
         what: ceoloide/diode_tht_sod123
         where: /^matrix/
         params:
+          reversible: true
           include_tht: false
           include_traces_vias: true
           from: "{{colrow}}"
           to: "{{row_net}}"
-        adjust.shift: [-8, 1.5]
+        adjust.shift: [-8.3, 1.5]
         adjust.rotate: 270
-      usbBreakout: &usbBreakout
-        what: usb_breakout_4p
-        where: matrix_inner_num
-        params:
-          P1: RAW
-          P2: "P1" #GP0
-          P3: "P0" #GP1
-          P4: GND
-        adjust.shift: [0, 19.3]
-      usbRecepticle: &usbRecepticle
-        what: usb_c_16_pin_recepticle
-        where: matrix_inner_num
-        params:
-          GND: GND
-          VBUS: RAW
-          DP: "P1" #GP0
-          DN: "P0" #GP1
-        adjust.shift: [0, 21.1]
-        adjust.rotate: 180
-      reset: &reset
-        what: ceoloide/reset_switch_smd_side
-        params.side: B
-        where: matrix_outer_num
-        adjust.shift: [-14.5, 0]
-        adjust.rotate: 90
-      power: &power
-        what: ceoloide/power_switch_smd_side
-        params.side: B
-        where: matrix_outer_top
-        adjust.shift: [-14.5, 0]
-        adjust.rotate: 180
-      batteryConnector: &batteryConnector
-        what: ceoloide/battery_connector_jst_ph_2
-        where: matrix_pinky_bottom
-        adjust.shift: [-4, -14.5]
-        adjust.rotate: 90
-      ledFirst: &ledFirst
-        what: ceoloide/led_sk6812mini-e
-        where: matrix_outer_num
-        params:
-          P1: RAW
-          P2: LED_OUT # Trust me it makes senss
-          P3: GND
-          P4: P7 #GP7
-        adjust.shift: [0, 5]
-      ledSet1: &ledSet1
-        what: ceoloide/led_sk6812mini-e
-        where: /^matrix_(index|ring|outer_top|outer_home|outer_bottom|thumb_inner)/
-        params:
-          P1: RAW
-          P2: LED_OUT
-          P3: GND
-          P4: LED_IN
-        adjust.shift: [0, 5]
-      ledSet2: &ledSet2
-        what: ceoloide/led_sk6812mini-e
-        where: /^matrix_(inner|middle|pinky|thumb_center)/
-        params:
-          P1: RAW
-          P2: LED_IN # LED_IN -> To next LED Trust me it makes sense
-          P3: GND
-          P4: LED_OUT #  LED_OUT -> To this pin
-        adjust.shift: [0, 5]
-      ledLast: &ledLast
-        what: ceoloide/led_sk6812mini-e
-        where: matrix_thumb_outer
-        params:
-          P1: RAW
-          P2: undefined
-          P3: GND
-          P4: LED_IN
-        adjust.shift: [0, 5]
       mountingHoles: &holes
         what: ceoloide/mounting_hole_npth
         where: /^screw/
-      expansion: &expansion
-        what: pin_header_6_pin
+      expansion: 
+        what: pin_header_6pin_2.54
         where: matrix_inner_home
         params:
-          P1: GND
-          P2: RAW
-          P3: P8
-          P4: P9
-          P5: P10
-          P6: P16
-        adjust.shift: [13,0]
-      rowRoute1: &rowRoute1
+          P1: P3V3
+          P2: GND
+          P3: GP4
+          P4: GP5
+          P5: GP6
+          P6: GP7
+        adjust.shift: [13,-9]
+      rowRoute: 
         what: ceoloide/utility_router
         where: /^matrix/
         params:
           width: 0.2
-          route: "b(-8.2,3.8)(-8.2,0.2)"
-      rowRoute2: &rowRoute2
-        what: ceoloide/utility_router
-        where: /^matrix/
-        params:
-          width: 0.2
-          route: "b(-8.2,-3.2)(-8.2,-9)v|(-8.2, -9)(8.5, -9)"
-      colRoute: &colRoute
+          route: "b(-8.3,3.8)(-8.3,0.2)|(-8.3,-3.2)(-8.3,-8.9)v|(-8.3, -8.9)(8.5, -8.9)"
+      colRoute: 
         what: ceoloide/utility_router
         where: /^matrix/
         params:
           width: 0.2
           route: "b(4.3,6)(8.6,6)"
-      gndRoute: &gndRoute
+      ledFirst: 
+        what: ceoloide/led_sk6812mini-e
+        where: matrix_outer_num
+        params:
+          reversible: true
+          via_size: 0.6
+          via_drill: 0.3
+          gnd_trace_width: 0.4
+          vcc_trace_width: 0.4
+          P1: P5V
+          P2: LED_NET
+          P3: GND
+          P4: LED_IN
+        adjust.shift: [0, 5]
+      leds: 
+        what: ceoloide/led_sk6812mini-e
+        where: /^matrix_(inner|index|middle|ring|pinky|outer_top|outer_home|thumb)/
+        params:
+          reversible: true
+          via_size: 0.6
+          via_drill: 0.3
+          gnd_trace_width: 0.4
+          vcc_trace_width: 0.4
+          P1: P5V
+          P2: LED_NET
+          P3: GND
+          P4: LED_NET
+        adjust.shift: [0, 5]
+      gndRoute: 
         what: ceoloide/utility_router
         where: /^matrix/
         params:
-          width: 0.2
-          route: "b(-2.7,-5.8)(-2.7,-8.1)v|(-8.5, -8.1)(8.5, -8.1)"
-      5vRoute: &5vRoute
+          width: 0.4
+          route: "b(-4.06, -4.3)(-4.06, -8.1)v|(-8.5, -8.1)(8.5, -8.1)"
+      5vRoute: 
         what: ceoloide/utility_router
         where: /^matrix/
         params:
-          width: 0.2
-          route: "b(2.7,-4.4)(5.2,-4.4)(5.2,-7.3)v|(-8.5,-7.3)(8.5,-7.3)"
-      outRoute: &outRoute
+          width: 0.4
+          route: "b(2.7,-4.4)(6.2,-4.4)(6.2,-7.3)v|(-8.5,-7.3)(8.5,-7.3)"
+      outRoute: 
         what: ceoloide/utility_router
         where: /^matrix/
         params:
-          width: 0.2
-          route: "b(2.7,-5.8)(4.2,-5.8)v(8.5,-5.8)"
-      inRoute: &inRoute
+          width: 0.25
+          route: "f(5,-5.7)(8.5,-5.7)"
+      inRoute: 
         what: ceoloide/utility_router
         where: /^matrix/
         params:
-          width: 0.2
-          route: "b(-2.7,-4.4)(-4.7,-4.4)(-4.7,-5.8)v(-8.5,-5.8)"
-      orientationText: &orientationText
+          width: 0.25
+          route: "f(-4.94,-5.7)(-8.5,-5.7)"
+      orientationLeftText: 
         what: ceoloide/utility_text
         where: matrix_index_num
         params:
@@ -771,130 +780,22 @@ pcbs:
           width: 2
         adjust:
           shift: [0, 12]
-      byText: &byText
+      orientationRightText: 
         what: ceoloide/utility_text
         where: matrix_index_num
         params:
-          text: "NWSplit Rev. V \\nby NWSteenberg"
-        adjust:
-          shift: [0, 17]
-      ergogenLogo: &ergogenLogo
-        what: ceoloide/utility_ergogen_logo
-        where: matrix_outer_bottom
-        adjust:
-          shift: [-6.5, -12.5]
-      batteryText: &batteryText
-        what: ceoloide/utility_text
-        where: matrix_ring_bottom
-        params:
-          height: 0.6
-          width: 0.6
-          text: "Battery goes here ↓ Max Dimentions: 34mm x 18.5mm x 8mm"
-        adjust:
-          shift: [9, -10.5]
-  pcbRight:
-    template: kicad8
-    outlines:
-      - outline: _outlinePCBRight
-    footprints:
-      mcu:
-        <<: *mcu
-        where: mirror_matrix_outer_num
-        adjust.rotate: 180
-      socketsChocv2:
-        <<: *sockets
-        where: /^mirror_matrix/
-      diode:
-        <<: *diode
-        where: /^mirror_matrix/
-        adjust.shift: [8.25, 1.5]
-        adjust.rotate: 90
-      usbBreakout:
-        <<: *usbBreakout
-        where: mirror_matrix_inner_num
-      usbRecepticle:
-        <<: *usbRecepticle
-        where: mirror_matrix_inner_num
-      reset: 
-        <<: *reset
-        where: mirror_matrix_outer_num
-        adjust.rotate: 270
-      power: 
-        <<: *power
-        where: mirror_matrix_outer_top
-      batteryConnector: 
-        <<: *batteryConnector
-        where: mirror_matrix_pinky_bottom
-      ledFirst:
-        <<: *ledFirst
-        where: mirror_matrix_outer_num
-        adjust.rotate: 180
-      ledSet1:
-        <<: *ledSet1
-        where: /^mirror_matrix_(index|ring|outer_top|outer_home|outer_bottom|thumb_inner)/
-        adjust.rotate: 180
-      ledSet2:
-        <<: *ledSet2
-        where: /^mirror_matrix_(inner|middle|pinky|thumb_center)/
-        adjust.rotate: 180
-      ledLast:
-        <<: *ledLast
-        where: mirror_matrix_thumb_outer
-        adjust.rotate: 180
-      mountingHoles:
-        <<: *holes
-        where: /^mirror_screw/
-      expansion:
-        <<: *expansion
-        where: mirror_matrix_inner_home
-        adjust.rotate: 180
-        adjust.shift: [13, -12.7]
-      rowRoute1:
-        <<: *rowRoute1
-        where: /^mirror_matrix/
-      rowRoute2:
-        <<: *rowRoute2
-        where: /^mirror_matrix/
-      colRoute:
-        <<: *colRoute
-        where: /^mirror_matrix/
-      gndRoute:
-        <<: *gndRoute
-        where: /^mirror_matrix/
-        params:
-          width: 0.2
-          route: "b(2.7,-4.4)(5.2,-4.4)(5.2,-7.3)v|(-8.5,-7.3)(8.5,-7.3)"
-      5vRoute:
-        <<: *5vRoute
-        where: /^mirror_matrix/
-        params:
-          width: 0.2
-          route: "b(-2.7,-5.8)(-2.7,-8.1)v|(-8.5, -8.1)(8.5, -8.1)"
-      outRoute:
-        <<: *outRoute
-        where: /^mirror_matrix/
-        params:
-          width: 0.2
-          route: "b(-2.7,-4.4)(-4.7,-4.4)(-4.7,-5.8)v(-8.5,-5.8)"
-      inRoute:
-        <<: *inRoute
-        where: /^mirror_matrix/
-        params:
-          width: 0.2
-          route: "b(2.7,-5.8)(4.2,-5.8)v(8.5,-5.8)"
-      orientationText:
-        <<: *orientationText
-        where: mirror_matrix_index_num
-        params:
+          side: B
+          mirrored: true
           text: "(right) ⌨"
           height: 2
           width: 2
-      byText:
-        <<: *byText
-        where: mirror_matrix_index_num
-      ergogenLogo:
-        <<: *ergogenLogo
-        where: mirror_matrix_outer_bottom
-      batteryText:
-        <<: *batteryText
-        where: mirror_matrix_ring_bottom
+        adjust:
+          shift: [0, 12]
+      byText: 
+        what: ceoloide/utility_text
+        where: matrix_index_num
+        params:
+          reversible: true
+          text: "NWSplit Rev. V \\nby NWSteenberg"
+        adjust:
+          shift: [0, 17]

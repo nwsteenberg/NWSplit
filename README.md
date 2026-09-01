@@ -1,22 +1,21 @@
 # NWSplit keyboard
-NWSplit is a 6x4+3 keys colum-staggered split keyboard designed in Ergogen. Inspiration from [achyudh/karma](https://github.com/achyudh/karma), [christianselig/caldera](https://christianselig.com/2024/07/caldera-keyboard/) and [carrefinho/forager](https://github.com/carrefinho/forager) 
+NWSplit is a 3+5x4+3 keys colum-staggered split keyboard designed in Ergogen. Inspiration from [achyudh/karma](https://github.com/achyudh/karma), [christianselig/caldera](https://christianselig.com/2024/07/caldera-keyboard/) and [carrefinho/forager](https://github.com/carrefinho/forager) 
 
-The goal was to create a keyboard for me. Through various iterations i have come up with the following design.
+The goal was to create a keyboard perfect for me. Through that process i have created quite a handful of keyboards that did not meet that criteria. See [Graveyard](images/graveyard)
 
 ![NWSplit Keyboard](images/nwsplit.jpg) 
 
 ## TODO
 - [ ] Build Instructions
-- [ ] ZMK Firmware
-- [ ] Expansions (Screen, Pointing Device etc.)
+- [u] Expansion
 ________________________________________
 
 ## Features
 - QMK/VIAL firmware
 - Hot-swap Kailh Choc v1/v2 support
-- Wired and wireless version
 - Per-key RGB
 - Case and PCB designed entirely in [Ergogen](https://ergogen.xyz/) 
+- Rotary encoder
 ________________________________________
 ## Repo Structure
 - `footprints/` - Custom footprints used in the PCB design in Ergogen
@@ -31,18 +30,14 @@ ________________________________________
 |-----------|-------------|-----|---------|
 | PCB | Gerber in release section | 2 | One right and one left (often ordered in sets of min. 5) |
 | Diode | 1N4148, SOD123 | 54 | |
-| MCU | Pro Micro RP2040 (I.e. Sparkfun Pro Micro - 2040) | 2 | Wired only |
-| MCU | Supermini nRF52840 | 2 | Wireless only |
-| USB-C 16Pin | USB Type-C 16Pin 2.54mm Female recepticle | 2 | Wired only |  
+| MCU | Waveshare RP2040-zero | 2 | |
+| USB-C 6Pin | USB Type-C 6Pin 2.54mm Female recepticle | 2 | |  
 | LED | SK6912 MINI-E | 54 | Optional if you want per-key RGB |
-| Power Switch | MSK12C02 | 2 | Wireless only |
-| Reset Switch | Panasonic EVQ-PUC02K | 2 | Wireless only |
-| JST Connector | 2 Pin PH2.0 JST Male | 2 | Wireless only |
-| JST Connector | 2 Pin PH2.0 JST Female 90° | 2 | Wireless only |
 | Switch Hotswap Sockets | Kailh Choc V1/V2 compatible | 54 | |
 | Switches | Any Kailh Choc V2 type switch without guide pin | 54 | |
 | Keycaps | Your choice. | 54 | 
-| Magnetic Pogo Connector | Your choice. | 54 | Used for experimentation - not needed |
+| Rotary encoder | EC11/EC12 | 0-2 | Button click is supported | 
+| Magnetic Pogo Connector | Your choice. | 0-2 | Used for experimentation - not needed |
 
 ## Build Instructions
 \#TODO

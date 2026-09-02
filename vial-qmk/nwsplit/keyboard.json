@@ -31,9 +31,6 @@
   },
   "split": {
     "enabled": true,
-    "transport": {
-      "protocol": "usart"
-    },
     "serial": {
       "driver": "vendor",
       "pin": "GP0"

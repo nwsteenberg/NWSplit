@@ -44,7 +44,7 @@ jobs:
       - name: Upload Ergogen Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: nwsplit-firmware
+          name: nwsplit-ergogen
           path: output/**
 
       - name: Create Release (only when tagged)

@@ -7,7 +7,8 @@ The goal was to create a keyboard perfect for me. Through that process i have cr
 
 ## TODO
 - [ ] Build Instructions
-- [u] Expansion
+- [ ] Expansion
+- [ ] Images 
 ________________________________________
 
 ## Features
@@ -28,14 +29,14 @@ ________________________________________
 ## Bill of Materials (BOM)
 | Component | Description | Quantity | Comment |
 |-----------|-------------|-----|---------|
-| PCB | Gerber in release section | 2 | One right and one left (often ordered in sets of min. 5) |
-| Diode | 1N4148, SOD123 | 54 | |
+| PCB | Gerber in release section | 2 | PCB's are reversible (left and right use same pcb) |
+| Diode | 1N4148, SOD123 | 52 | |
 | MCU | Waveshare RP2040-zero | 2 | |
 | USB-C 6Pin | USB Type-C 6Pin 2.54mm Female recepticle | 2 | |  
-| LED | SK6912 MINI-E | 54 | Optional if you want per-key RGB |
-| Switch Hotswap Sockets | Kailh Choc V1/V2 compatible | 54 | |
-| Switches | Any Kailh Choc V2 type switch without guide pin | 54 | |
-| Keycaps | Your choice. | 54 | 
+| LED | SK6912 MINI-E | 52 | Optional if you want per-key RGB |
+| Switch Hotswap Sockets | Kailh Choc V1/V2 compatible | 52 | |
+| Switches | Any Kailh Choc V2 type switch without guide pin | 52 | |
+| Keycaps | Your choice. | 52 | 
 | Rotary encoder | EC11/EC12 | 0-2 | Button click is supported | 
 | Magnetic Pogo Connector | Your choice. | 0-2 | Used for experimentation - not needed |
 

@@ -13,17 +13,12 @@
     "rgb_matrix": true,
     "encoder": true
   },
-  "encoder": {
-    "rotary": [
-      { "pin_a": "GP2", "pin_b": "GP3", "resolution": 2 }
-    ]
-  },
   "pointing_device": {
     "enabled": true,
     "driver": "pmw3360"
   },
   "ws2812": {
-    "pin": "GP7",
+    "pin": "GP1",
     "driver": "vendor"
   },
   "bootmagic": {
@@ -32,6 +27,11 @@
   "matrix_pins": {
     "cols": ["GP29", "GP28", "GP27", "GP26", "GP15", "GP14"],
     "rows": ["GP8", "GP9", "GP10", "GP11", "GP12", "GP13"]
+  },
+  "encoder": {
+    "rotary": [
+      { "pin_a": "GP2", "pin_b": "GP3", "resolution": 2 }
+    ]
   },
   "split": {
     "enabled": true,

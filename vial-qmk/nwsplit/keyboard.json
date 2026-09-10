@@ -29,7 +29,9 @@
     "rows": ["GP8", "GP9", "GP10", "GP11", "GP12", "GP13"]
   },
   "encoder": {
-    "rotary": []
+    "rotary": [
+      { "pin_a": "GP5", "pin_b": "GP6", "resolution": 1 }
+    ]
   },
  "split": {
     "enabled": true,
@@ -37,10 +39,8 @@
       "driver": "vendor"
     },  
     "encoder": {
-      "left": {
-        "rotary": [
-          { "pin_a": "gp5", "pin_b": "gp6", "resolution": 1 }
-        ]
+      "right": {
+        "rotary": []
       }
     }
   },

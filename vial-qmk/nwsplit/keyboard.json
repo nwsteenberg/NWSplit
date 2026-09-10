@@ -37,12 +37,7 @@
     "enabled": true,
     "serial": {
       "driver": "vendor"
-    },  
-    "encoder": {
-      "right": {
-        "rotary": []
-      }
-    }
+    }  
   },
   "url": "",
   "usb": {

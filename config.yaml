@@ -95,7 +95,7 @@ points:
     knob:
       anchor:
         - ref: matrix_pinky_num
-          shift: [-0U, 1U]
+          shift: [-0.15U, 1.15U]
       columns.only.key.column_net: "GP28"
       rows.only.row_net: "GP8"
   mirror:
@@ -109,7 +109,7 @@ outlines:
   _knobCutout:
     - what: rectangle
       size: [14, 15]
-      fillet: 0.1
+      fillet: 3
 
   _rightSubstitution:
     - what: rectangle
@@ -174,18 +174,13 @@ outlines:
       size: [9.5, 20]
       where: /matrix_outer_num/
       adjust.shift: [-1, 27.24+10]
-  _USBSerialCutout:
+  _TRRSCutout:
     - what: rectangle
-      size: [10, 8.5]
+      size: [9, 25]
       where: /matrix_inner_num/
-      adjust: &usbPosition
-        shift: [0, 22.5]
-        rotate: 180
-    - what: rectangle
-      where: /matrix_inner_num/
-      size: [10, 10]
-      adjust: 
-        shift: [0, 30]
+      adjust: &trrsPosition
+        shift: [0, 25]
+      fillet: 0.5
 
   _expansionCutout:
     - what: rectangle
@@ -200,38 +195,27 @@ outlines:
       where: /matrix_inner_home/
       adjust.shift: [13+5,-9]
       expand: 0.5
-
-  _PCBCutouts:
-    - what: outline
-      name: _MCUPCBCutout
     
   _bottomCutout:
     - what: outline
       name: _bottomKeyCutout
       where: /matrix/
+      fillet: 0.5
     - what: outline
       name: _bottomKnobCutout
       where: /knob/
     - what: outline
-      name: _expansionCutout
-  
-  _knobRotaryCutout:
-    - what: circle
-      radius: 10
-      where: /knob/
-  _knobStickCutout:
-    - what: circle
-      radius: 4
-      where: /knob/
+      name: _TRRSCutout
+
   _knobBaseCutout:
     - what: outline
       name: _knobCutout
       where: /knob/
-  _knobCutoutExtraAtKeys:
-    - what: rectangle
-      size: [10, 10]
-      where: /knob/
-      adjust.shift: [5,-5]
+  _knobLeadsCutout:
+    - what: outline
+      name: _knobBaseCutout
+      expand: 1
+
   _screwRecess:
     - what: circle
       radius: screwHeadRadius
@@ -334,7 +318,7 @@ outlines:
     - what: outline
       name: _outline
     - what: outline
-      name: _PCBCutouts
+      name: _MCUPCBCutout
       operation: subtract
       fillet: 0.5
     - what: outline
@@ -468,12 +452,6 @@ outlines:
       operation: subtract
       fillet: 0.75
 
-  _outlineBottom:
-    - what: outline
-      name: _caseOutline
-    - what: outline
-      name: _bottomCutout
-      operation: subtract
 
   representation:
     - what: outline
@@ -497,23 +475,20 @@ cases:
   _knobNegative:
     - what: outline
       name: _knobBaseCutout
-      extrude: 6.5
-    - what: outline
-      name: _knobStickCutout
-      extrude: 15
-    - what: outline
-      name: _knobRotaryCutout
       extrude: 20
-      shift: [0, 0, 6]
     - what: outline
-      name: _knobCutoutExtraAtKeys
-      extrude: 20
-      shift: [0, 0, 6]
+      name: _knobLeadsCutout
+      extrude: 4
 
   _bottom:
     - what: outline
-      name: _outlineBottom
+      name: _caseOutline
       extrude: baseHeight+1
+    - what: outline
+      name: _bottomCutout
+      extrude: 2
+      shift: [0,0, baseHeight+1-2]
+      operation: subtract
     - what: outline
       name: _caseWalls
       extrude: baseWallHeight+1
@@ -544,6 +519,12 @@ cases:
       extrude: 3
       operation: subtract
       shift: [0,0,baseHeight+1-3]
+
+    - what: outline
+      name: _MCUTopCutout
+      extrude: 3.5
+      operation: subtract
+      shift: [0,0,baseHeight+1-pcbThickness]
 
     - what: outline
       name: _rightSubstitution
@@ -585,15 +566,15 @@ cases:
       operation: subtract
     - what: outline
       name: _caseTop
-      extrude: 5+2.2
+      extrude: fromPlateToTop+2.2
     - what: outline
       name: _holesTop
       extrude: 4.5
       operation: subtract
       shift: [0, 0, 0]
     - what: outline
-      name: _USBSerialCutout
-      extrude: 3
+      name: _TRRSCutout
+      extrude: 5
       operation: subtract
 
   topLeft:
@@ -602,7 +583,7 @@ cases:
 
     - what: outline
       name: _MCUTopCutout
-      extrude: 3.5
+      extrude: 3.5-1.6
       operation: subtract
 
     - what: case
@@ -623,6 +604,12 @@ cases:
       name: _MCUBottomCutout
       extrude: 3
       operation: subtract
+
+    - what: outline
+      name: _MCUTopCutout
+      extrude: 3
+      operation: subtract
+      shift: [0,0, 1.6-3]
 
     - what: outline
       name: _expansionCutoutTopCase
@@ -647,18 +634,21 @@ pcbs:
         params:
           flip: false
           side: B
-          GP0: SERIAL_DATA
-          GP1: LED_IN
+          GP0: SERIAL_DATA_RX
+          GP1: SERIAL_DATA_TX
+          GP5: GP5 # Expansion Pin AND Encoder
+          GP6: GP6 # Expansion Pin AND Encoder
         adjust.shift: [-11.14, 14.68]
-      usb_serial:
-        what: usc_c_6pin_receptacle
+      trrs:
+        what: ceoloide/trrs_pj320a
         where: matrix_inner_num
         params:
-          GND: GND
-          VCC: P5V
-          CC1: SERIAL_DATA
-          CC2: SERIAL_DATA
-        adjust: *usbPosition
+          reversible: true
+          TP: GND
+          SL: P5V
+          R1: SERIAL_DATA_RX
+          R2: SERIAL_DATA_TX
+        adjust: *trrsPosition
       socketsChocv2: 
         what: ceoloide/switch_choc_v1_v2
         where: /^matrix/
@@ -678,20 +668,29 @@ pcbs:
           include_plate_hole_marking: true
           S1: "{{column_net}}"
           S2: "{{row_net}}"
-          A: GP2 #A Pin in schematics
+          A: GP5 #A Pin in schematics
           B: GND #C Pin
-          C: GP3 #B Pin 
-        adjust.rotate: 180
-      diode:
+          C: GP6 #B Pin 
+      diodeL:
         what: ceoloide/diode_tht_sod123
         where: /^matrix/
         params:
-          reversible: true
           include_tht: false
           include_traces_vias: true
           from: "{{colrow}}"
           to: "{{row_net}}"
         adjust.shift: [-8.3, 1.5]
+        adjust.rotate: 270
+      diodeR:
+        what: ceoloide/diode_tht_sod123
+        where: /^matrix/
+        params:
+          side: F
+          include_tht: false
+          include_traces_vias: true
+          from: "{{colrow}}"
+          to: "{{row_net}}"
+        adjust.shift: [8.3, 1.5]
         adjust.rotate: 270
       mountingHoles: &holes
         what: ceoloide/mounting_hole_npth
@@ -700,19 +699,25 @@ pcbs:
         what: pin_header_6pin
         where: matrix_inner_home
         params:
-          P1: P3V3
-          P2: GND
+          P1: GP6
+          P2: GP5
           P3: GP4
-          P4: GP5
-          P5: GP6
-          P6: GP7
+          P4: GP3
+          P5: P3V3
+          P6: GND
         adjust.shift: [13,-9]
-      rowRoute: 
+      rowRouteL: 
         what: ceoloide/utility_router
         where: /^matrix/
         params:
           width: 0.2
           route: "b(-8.3,3.8)(-8.3,0.2)|(-8.3,-3.2)(-8.3,-8.9)v|(-8.3, -8.9)(8.5, -8.9)"
+      rowRouteR: 
+        what: ceoloide/utility_router
+        where: /^matrix/
+        params:
+          width: 0.2
+          route: "f(8.3,3.8)(8.3,0.2)|(8.3,-3.2)(8.3,-5)v(8.3,-8.9)v"
       colRoute: 
         what: ceoloide/utility_router
         where: /^matrix/
@@ -731,7 +736,7 @@ pcbs:
           P1: P5V
           P2: LED_NET
           P3: GND
-          P4: LED_IN
+          P4: GP2 # LED_IN
         adjust.shift: [0, 5]
       leds: 
         what: ceoloide/led_sk6812mini-e
@@ -752,25 +757,25 @@ pcbs:
         where: /^matrix/
         params:
           width: 0.4
-          route: "b(-4.06, -4.3)(-4.06, -8.1)v|(-8.5, -8.1)(8.5, -8.1)"
+          route: "b(-4.06, -4.3)(-4.06, -8.1)v|(-7.5, -8.1)(7.5, -8.1)"
       5vRoute: 
         what: ceoloide/utility_router
         where: /^matrix/
         params:
           width: 0.4
-          route: "b(2.7,-4.4)(6.2,-4.4)(6.2,-7.3)v|(-8.5,-7.3)(8.5,-7.3)"
+          route: "b(2.7,-4.4)(6.2,-4.4)(6.2,-7.3)v|(-7,-7.3)(7,-7.3)"
       outRoute: 
         what: ceoloide/utility_router
         where: /^matrix/
         params:
           width: 0.25
-          route: "f(5,-5.7)(8.5,-5.7)"
+          route: "f(5,-5.7)(6.5,-5.7)"
       inRoute: 
         what: ceoloide/utility_router
         where: /^matrix/
         params:
           width: 0.25
-          route: "f(-4.94,-5.7)(-8.5,-5.7)"
+          route: "f(-4.94,-5.7)(-6.5,-5.7)"
       orientationLeftText: 
         what: ceoloide/utility_text
         where: matrix_index_num

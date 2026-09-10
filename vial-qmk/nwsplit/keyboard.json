@@ -30,20 +30,17 @@
   },
   "encoder": {
     "rotary": [
-      { "pin_a": "GP2", "pin_b": "GP3", "resolution": 2 }
+      { "pin_a": "GP5", "pin_b": "GP6", "resolution": 2 }
     ]
   },
-  "split": {
+ "split": {
     "enabled": true,
     "serial": {
-      "driver": "vendor",
-      "pin": "GP0"
+      "driver": "vendor"
     },  
     "encoder": {
       "right": {
-        "rotary": [
-          {"pin_a": "GP3", "pin_b": "GP2", "resolution": 2}
-        ]
+        "rotary": []
       }
     }
   },

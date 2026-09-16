@@ -1,0 +1,186 @@
+units:
+  outlinePadding: 1
+
+  plateThickness: 1.6
+  pcbThickness: 1.6
+
+  keyCutoutDimentions: 13.95
+
+  # Case
+  baseHeight: 3
+  screwRadius: 1.1 # M2 + 0.2mm buffer
+  screwHoleRadius: 1.55
+  screwHoleWallThickness: 2
+  screwHeadRadius: 2.1 # 4mm + 0.2mm buffer
+  fromPlateToTop: 5
+
+  baseWallHeight: baseHeight + pcbThickness
+  topWallHeight: 2.2
+  wallThickness: 1.6
+
+points:
+  zones:
+    expansion:
+      
+    expansion_screw_1:
+      anchor:
+        - ref: expansion
+          shift: [8,-11.1]
+    expansion_screw_2:
+      anchor:
+        - ref: expansion
+          shift: [8,13.4]
+    expansion_screw_3:
+      anchor:
+        - ref: expansion
+          shift: [-8,-11.1]
+    expansion_screw_4:
+      anchor:
+        - ref: expansion
+          shift: [-8,13.4]
+
+outlines:
+  # Expansion stuff
+  _trackBallSensorCutout:
+  - what: rectangle
+    where: expansion
+    size: [13, 19]
+    adjust.shift: [0, 0]
+    fillet: 0.5
+  _trackBallLensCutout:
+  - what: rectangle
+    where: expansion
+    size: [19.5, 22]
+    adjust.shift: [0, 0.25]
+    fillet: 7
+  
+  trackBallOpticCutout:
+  - what: rectangle
+    size: [4, 4]
+    where: expansion
+    adjust.shift: [0,0.25+2]
+  - what: circle
+    radius: 2
+    adjust.shift: [0,0.25]
+    where: expansion
+    fillet: 0.1
+    expand: 1
+  
+
+  _expansionPCB:
+  - what: rectangle
+    where: expansion
+    size: [22, 34]
+    #size: [30, 39]
+    adjust.shift: [0,3]
+    #adjust.shift: [3.5,0] 
+    expand: outlinePadding
+  _expansionCase:
+    - what: outline
+      name: _expansionPCB
+      expand: 0.7
+  _expansionPCBSeat:
+    - what: outline
+      name: _expansionCase
+      expand: -2
+    - what: outline
+      name: _expansionCase 
+      operation: stack
+  _expansionWalls:
+    - what: outline
+      name: _expansionCase
+      expand: wallThickness
+    - what: outline
+      name: _expansionCase
+      operation: subtract
+  _expansionHoles:
+    - what: circle
+      radius: screwHoleRadius
+      where: /^expansion_screw/
+  _expansionScrewRecess:
+    - what: circle
+      radius: screwHeadRadius
+      where: /^expansion_screw/
+  _expansionStandOff:
+    - what: outline
+      name: _expansionHoles
+      expand: screwHoleWallThickness
+    - what: outline
+      name: _expansionHoles
+      operation: subtract
+  _expansionSideCutout:
+    - what: rectangle
+      size: [23, 2.54+10]
+      where: expansion
+      adjust.shift: [2.54/2, 17.9]
+      expand: 0.5
+  
+
+cases:
+  expansionBase:
+    - what: outline
+      name: _expansionCase
+      extrude: 1
+    - what: outline
+      name: _expansionWalls
+      extrude: baseWallHeight+1
+    - what: outline
+      name: _expansionPCBSeat
+      extrude: baseHeight+1
+    - what: outline
+      name: _expansionHoles
+      operation: subtract
+      extrude: 50
+    - what: outline
+      name: _expansionScrewRecess
+      operation: subtract
+      extrude: 0.6
+      
+
+
+  expansionTop:
+    - what: outline
+      name: _expansionWalls
+      extrude: 7.4-1.6
+    - what: outline
+      name: _expansionSideCutout
+      extrude: 4.5
+      operation: subtract
+    - what: outline
+      name: _expansionStandOff
+      extrude: 3
+      shift: [0,0, 1.6]
+    - what: outline
+      name: _expansionCase
+      extrude: 7.4-1.6-3-1.6
+      shift: [0,0, 1.6+3]
+    - what: outline
+      name: _trackBallLensCutout
+      extrude: 30
+      operation: subtract
+
+  lensCutout:
+    - what: outline
+      name: _trackBallLensCutout
+      extrude: 30
+  opticsCutout:
+    - what: outline
+      name: trackBallOpticCutout
+      extrude: 30
+
+
+# pcbs:
+#   trackball:
+#     template: kicad8
+#     outlines:
+#       - outline: _expansionPCB
+#       - outline: _trackBallSensorCutout
+#     footprints:
+#       mountingHoles:
+#         what: ceoloide/mounting_hole_npth
+#         where: /^expansion_screw/
+#       pinHeaderTrackBall:
+#         what: pin_header_7pin
+#         where: expansion
+#         adjust.shift: [0, 17.9]
+#         adjust.rotate: 90

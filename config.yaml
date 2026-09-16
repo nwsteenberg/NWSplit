@@ -516,15 +516,15 @@ cases:
 
     - what: outline
       name: _MCUBottomCutout
-      extrude: 3
+      extrude: 2.5
       operation: subtract
-      shift: [0,0,baseHeight+1-3]
+      shift: [0,0,baseHeight+1-2.5]
 
     - what: outline
       name: _MCUTopCutout
       extrude: 3.5
       operation: subtract
-      shift: [0,0,baseHeight+1-pcbThickness]
+      shift: [0,0,baseHeight+1]
 
     - what: outline
       name: _rightSubstitution
@@ -540,7 +540,7 @@ cases:
       name: _MCUTopCutout
       extrude: 3.5
       operation: subtract
-      shift: [0,0,baseHeight+pcbThickness+1-3.5]
+      shift: [0,0,baseHeight+pcbThickness+1-2.5]
 
     - what: outline
       name: _leftSubstitution
@@ -583,8 +583,9 @@ cases:
 
     - what: outline
       name: _MCUTopCutout
-      extrude: 3.5-1.6
+      extrude: 3.5
       operation: subtract
+      shift: [0,0, -1.6]
 
     - what: case
       name: _knobNegative
@@ -602,14 +603,8 @@ cases:
 
     - what: outline
       name: _MCUBottomCutout
-      extrude: 3
+      extrude: 2.5
       operation: subtract
-
-    - what: outline
-      name: _MCUTopCutout
-      extrude: 3
-      operation: subtract
-      shift: [0,0, 1.6-3]
 
     - what: outline
       name: _expansionCutoutTopCase

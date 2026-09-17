@@ -71,20 +71,28 @@ outlines:
   - what: rectangle
     where: expansion
     size: [22, 34]
-    #size: [30, 39]
     adjust.shift: [0,3]
-    #adjust.shift: [3.5,0] 
     expand: outlinePadding
+
+  _expansionCaseCircle:
+    - what: circle
+      where: expansion
+      radius: 20
+
   _expansionCase:
     - what: outline
       name: _expansionPCB
       expand: 0.7
+    - what: outline
+      where: expansion
+      name: _expansionCaseCircle
+
   _expansionPCBSeat:
     - what: outline
-      name: _expansionCase
-      expand: -2
+      name: _expansionPCB
+      expand: -1.5
     - what: outline
-      name: _expansionCase 
+      name: _expansionPCB 
       operation: stack
   _expansionWalls:
     - what: outline
@@ -135,8 +143,6 @@ cases:
       name: _expansionScrewRecess
       operation: subtract
       extrude: 0.6
-      
-
 
   expansionTop:
     - what: outline
@@ -158,6 +164,12 @@ cases:
       name: _trackBallLensCutout
       extrude: 30
       operation: subtract
+
+  expansionTopBallHousing:
+    - what: outline
+      name: _expansionCaseCircle
+      extrude: 19
+      shift: [0,0, 7.4-1.6]
 
   lensCutout:
     - what: outline

@@ -26,3 +26,4 @@
 
 // PMW3360 Specific Configuration
 #define PMW3360_CS_PIN GP6       // Chip Select (CS/NCS) pin
+#define ROTATIONAL_TRANSFORM_ANGLE -95

@@ -25,5 +25,5 @@
 #define SPI_MISO_PIN GP4         // Master In Slave Out (MISO)
 
 // PMW3360 Specific Configuration
-#define PMW3360_CS_PIN GP3       // Chip Select (CS/NCS) pin
+#define PMW33XX_CS_PIN GP3       // Chip Select (CS/NCS) pin
 #define ROTATIONAL_TRANSFORM_ANGLE -95

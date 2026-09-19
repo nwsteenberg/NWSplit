@@ -30,7 +30,7 @@
   },
   "encoder": {
     "rotary": [
-      { "pin_a": "GP5", "pin_b": "GP6", "resolution": 1 }
+      { "pin_a": "GP6", "pin_b": "GP5", "resolution": 4 }
     ]
   },
  "split": {

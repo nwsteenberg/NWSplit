@@ -18,6 +18,7 @@
 
 // If the sensor is wired to the RIGHT half:
 #define POINTING_DEVICE_RIGHT
+#define SPLIT_POINTING_ENABLE
 // RP2040 Hardware SPI Configuration
 #define SPI_DRIVER SPID0          // Use SPID0 for SPI0, or SPID1 for SPI1
 #define SPI_SCK_PIN GP6          // Clock pin (SCLK)

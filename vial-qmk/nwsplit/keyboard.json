@@ -13,7 +13,6 @@
     "rgb_matrix": true,
     "encoder": true,
     "pointing_device": true,
-    "extrakey": true,
     "mousekey": true
   },
   "pointing_device": {

@@ -15,10 +15,6 @@
     "pointing_device": true,
     "mousekey": true
   },
-  "pointing_device": {
-    "enabled": true,
-    "driver": "pmw3360"
-  },
   "ws2812": {
     "pin": "GP2",
     "driver": "vendor"

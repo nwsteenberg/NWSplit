@@ -540,7 +540,7 @@ cases:
       name: _MCUTopCutout
       extrude: 3.5
       operation: subtract
-      shift: [0,0,baseHeight+pcbThickness+1-2.5]
+      shift: [0,0,baseHeight+pcbThickness+1-3.5]
 
     - what: outline
       name: _leftSubstitution

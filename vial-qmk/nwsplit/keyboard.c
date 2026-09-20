@@ -5,10 +5,8 @@
 static pin_t current_cs_pin = NO_PIN;
 
 void keyboard_post_init_user(void) {
-    // Force debug logging on so PMW3360 driver messages print to console
     debug_enable = true;
     debug_mouse = true;
-    uprintf("--- NWSplit Right Boot: Debug Mode Active ---\n");
 }
 
 void spi_init(void) {
@@ -20,8 +18,6 @@ void spi_init(void) {
     writePinHigh(SPI_SCK_PIN);      // SPI Mode 3: Clock idles HIGH
     writePinHigh(PMW33XX_CS_PIN);   // CS idles HIGH
     writePinHigh(SPI_MOSI_PIN);
-
-    uprintf("SPI Init: Bitbang GPIOs initialized\n");
 }
 
 bool spi_start(pin_t slavePin, bool lsbFirst, uint8_t mode, uint16_t divisor) {
@@ -44,7 +40,6 @@ void spi_stop(void) {
 static uint8_t soft_spi_transfer_byte(uint8_t byte) {
     uint8_t rx_data = 0;
     for (int i = 7; i >= 0; i--) {
-        // Clock falling edge -> set MOSI bit
         writePinLow(SPI_SCK_PIN);
         if (byte & (1 << i)) {
             writePinHigh(SPI_MOSI_PIN);
@@ -53,7 +48,6 @@ static uint8_t soft_spi_transfer_byte(uint8_t byte) {
         }
         wait_us(2);
 
-        // Clock rising edge -> sample MISO bit
         writePinHigh(SPI_SCK_PIN);
         wait_us(2);
         if (readPin(SPI_MISO_PIN)) {
@@ -91,4 +85,25 @@ spi_status_t spi_transmit_receive(const uint8_t *transmit_data, uint8_t *receive
         receive_data[i] = soft_spi_transfer_byte(transmit_data[i]);
     }
     return SPI_STATUS_SUCCESS;
+}
+
+// Directly query PMW3360 Register 0x00 (Product ID)
+static uint8_t test_read_product_id(void) {
+    writePinLow(PMW33XX_CS_PIN);
+    wait_us(1);
+    soft_spi_transfer_byte(0x00 & 0x7F); // Read Reg 0x00
+    wait_us(160);                        // PMW3360 tSRAD delay
+    uint8_t val = soft_spi_transfer_byte(0x00);
+    writePinHigh(PMW33XX_CS_PIN);
+    return val;
+}
+
+// Runs continuously in the background
+static uint16_t log_timer = 0;
+void housekeeping_task_user(void) {
+    if (timer_elapsed(log_timer) > 2000) {
+        log_timer = timer_read();
+        uint8_t prod_id = test_read_product_id();
+        uprintf("PMW3360 Test Read [Reg 0x00]: 0x%02X (Expected: 0x42)\n", prod_id);
+    }
 }

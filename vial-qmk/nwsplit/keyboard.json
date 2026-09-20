@@ -38,7 +38,9 @@
     }, 
     "encoder": {
       "right": {
-        { "pin_a": "GP24", "pin_b": "GP25", "resolution": 4 }
+        "rotary": [
+          { "pin_a": "GP24", "pin_b": "GP25", "resolution": 4 }
+        ]
       }
     }
   },

@@ -1,25 +1,43 @@
 #include "quantum.h"
 #include "spi_master.h"
+#include "print.h"
 
-// Initialize Bitbang GPIO pins
+static pin_t current_cs_pin = NO_PIN;
+
+void keyboard_post_init_user(void) {
+    // Force debug logging on so PMW3360 driver messages print to console
+    debug_enable = true;
+    debug_mouse = true;
+    uprintf("--- NWSplit Right Boot: Debug Mode Active ---\n");
+}
+
 void spi_init(void) {
     setPinOutput(SPI_SCK_PIN);
     setPinOutput(SPI_MOSI_PIN);
     setPinInputHigh(SPI_MISO_PIN);
     setPinOutput(PMW33XX_CS_PIN);
 
-    writePinHigh(SPI_SCK_PIN);     // SPI Mode 3: Clock idles HIGH
+    writePinHigh(SPI_SCK_PIN);      // SPI Mode 3: Clock idles HIGH
     writePinHigh(PMW33XX_CS_PIN);   // CS idles HIGH
     writePinHigh(SPI_MOSI_PIN);
+
+    uprintf("SPI Init: Bitbang GPIOs initialized\n");
 }
 
 bool spi_start(pin_t slavePin, bool lsbFirst, uint8_t mode, uint16_t divisor) {
-    writePinLow(slavePin);
+    current_cs_pin = slavePin;
+    if (current_cs_pin != NO_PIN) {
+        writePinLow(current_cs_pin);
+    }
+    wait_us(1);
     return true;
 }
 
 void spi_stop(void) {
-    writePinHigh(PMW33XX_CS_PIN);
+    wait_us(1);
+    if (current_cs_pin != NO_PIN) {
+        writePinHigh(current_cs_pin);
+    }
 }
 
 // Low-level byte transfer over Software SPI (Mode 3)
@@ -33,11 +51,11 @@ static uint8_t soft_spi_transfer_byte(uint8_t byte) {
         } else {
             writePinLow(SPI_MOSI_PIN);
         }
-        wait_us(1);
+        wait_us(2);
 
         // Clock rising edge -> sample MISO bit
         writePinHigh(SPI_SCK_PIN);
-        wait_us(1);
+        wait_us(2);
         if (readPin(SPI_MISO_PIN)) {
             rx_data |= (1 << i);
         }

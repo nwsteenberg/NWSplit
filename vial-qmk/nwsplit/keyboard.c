@@ -4,9 +4,11 @@
 
 static pin_t current_cs_pin = NO_PIN;
 
-void keyboard_post_init_user(void) {
+void keyboard_post_init_kb(void) {
     debug_enable = true;
     debug_mouse = true;
+    print("\n=== NWSplit Right Booted & Console Active ===\n");
+    keyboard_post_init_user();
 }
 
 void spi_init(void) {
@@ -98,12 +100,13 @@ static uint8_t test_read_product_id(void) {
     return val;
 }
 
-// Runs continuously in the background
-static uint16_t log_timer = 0;
-void housekeeping_task_user(void) {
-    if (timer_elapsed(log_timer) > 2000) {
-        log_timer = timer_read();
+// Runs continuously in the QMK main loop
+void housekeeping_task_kb(void) {
+    static uint32_t log_timer = 0;
+    if (timer_elapsed32(log_timer) > 2000) {
+        log_timer = timer_read32();
         uint8_t prod_id = test_read_product_id();
-        uprintf("PMW3360 Test Read [Reg 0x00]: 0x%02X (Expected: 0x42)\n", prod_id);
+        printf("PMW3360 Test Read [Reg 0x00]: 0x%02X (Expected: 0x42)\n", prod_id);
     }
+    housekeeping_task_user();
 }

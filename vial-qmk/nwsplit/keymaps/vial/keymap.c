@@ -8,7 +8,7 @@ enum layer_names {
 
 #define L_1 MO(_LAYER1)
 #define L_P MO(_POINTER)
-#define CTL_ESC RCTL_T(KC_ESC)
+#define CTL_ESC LCTL_T(KC_ESC)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT(

@@ -24,4 +24,4 @@
 
 // PMW3360 Specific Configuration
 #define PMW33XX_CS_PIN GP5       
-#define ROTATIONAL_TRANSFORM_ANGLE -95
+#define POINTING_DEVICE_ROTATION_180

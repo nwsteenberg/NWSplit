@@ -21,33 +21,49 @@ units:
 points:
   zones:
     expansion:
-      
-    expansion_screw_1:
+      anchor: 
+    expansion_screw_tbBreakout_1:
       anchor:
         - ref: expansion
           shift: [8,-11.1]
-    expansion_screw_2:
+    expansion_screw_tbBreakout_2:
       anchor:
         - ref: expansion
           shift: [8,13.4]
-    expansion_screw_3:
+    expansion_screw_tbBreakout_3:
       anchor:
         - ref: expansion
           shift: [-8,-11.1]
-    expansion_screw_4:
+    expansion_screw_tbBreakout_4:
       anchor:
         - ref: expansion
           shift: [-8,13.4]
+    expansion_screw_base_1:
+      anchor:
+        - ref: expansion
+          shift: [17.5,-12.1]
+    expansion_screw_base_2:
+      anchor:
+        - ref: expansion
+          shift: [-17.5,28]
+    expansion_screw_base_3:
+      anchor:
+        - ref: expansion
+          shift: [-17.5,-12.1]
+    expansion_screw_base_4:
+      anchor:
+        - ref: expansion
+          shift: [17.5,28]
 
 outlines:
   # Expansion stuff
-  _trackBallSensorCutout:
+  trackBallSensorCutout:
   - what: rectangle
     where: expansion
     size: [13, 19]
     adjust.shift: [0, 0]
     fillet: 0.5
-  _trackBallLensCutout:
+  trackBallLensCutout:
   - what: rectangle
     where: expansion
     size: [19.5, 22]
@@ -65,134 +81,221 @@ outlines:
     where: expansion
     fillet: 0.1
     expand: 1
-  
 
-  _expansionPCB:
+  _pcbOutline:
   - what: rectangle
     where: expansion
-    size: [22, 34]
-    adjust.shift: [0,3]
+    size: [38, 34+9.8]
+    adjust.shift: [0,3+(9.8/2)]
     expand: outlinePadding
 
-  _expansionCaseCircle:
-    - what: circle
-      where: expansion
-      radius: 20
+  _pcbOutlineWithCutout:
+  - what: outline
+    name: _pcbOutline
+  - what: rectangle
+    where: expansion
+    size: [22, 34+4]
+    adjust.shift: [0,3-(4/2)]
+    operation: subtract
 
-  _expansionCase:
-    - what: outline
-      name: _expansionPCB
-      expand: 0.7
-    - what: outline
-      where: expansion
-      name: _expansionCaseCircle
+  _trackballHousingBase:
+  - what: circle
+    where: expansion
+    radius: 19
+  _trackballHousingBaseWithWalls:
+  - what: circle
+    where: expansion
+    radius: 19
+    expand: wallThickness
 
-  _expansionPCBSeat:
+
+  _trackballBase:
+  - what: outline
+    name: _pcbOutline
+    expand: 0.5
+  - what: outline
+    name: _trackballHousingBase
+  
+  _trackballPCBSeat:
+  - what: outline
+    name: _trackballBase
+    expand: -1
+  - what: outline
+    name: _trackballBase
+    operation: stack
+
+  _trackballBaseWalls:
     - what: outline
-      name: _expansionPCB
-      expand: -1.5
-    - what: outline
-      name: _expansionPCB 
-      operation: stack
-  _expansionWalls:
-    - what: outline
-      name: _expansionCase
+      name: _trackballBase
       expand: wallThickness
     - what: outline
-      name: _expansionCase
+      name: _trackballBase
       operation: subtract
-  _expansionHoles:
+
+  _trackballBaseScrews:
+    - what: circle
+      radius: screwRadius
+      where: /^expansion_screw_base/
+
+  _trackballTopScrews:
     - what: circle
       radius: screwHoleRadius
-      where: /^expansion_screw/
-  _expansionScrewRecess:
+      where: /^expansion_screw_base/
+
+  _trackballScrewRecessBase:
     - what: circle
       radius: screwHeadRadius
-      where: /^expansion_screw/
-  _expansionStandOff:
+      where: /^expansion_screw_base/
+
+  _trackballBreakoutScrews:
+    - what: circle
+      radius: screwHoleRadius
+      where: /^expansion_screw_tbBreakout/
+
+  _trackballBaseStandoffs:
     - what: outline
-      name: _expansionHoles
+      name: _trackballBaseScrews
+    - what: outline
+      name: _trackballBreakoutScrews
       expand: screwHoleWallThickness
     - what: outline
-      name: _expansionHoles
+      name: _trackballBaseScrews
       operation: subtract
+    - what: outline
+      name: _trackballBreakoutScrews
+      operation: subtract
+
+  _trackballTopStandoffs:
+    - what: outline
+      name: _trackballTopScrews
+      expand: screwHoleWallThickness
+    - what: outline
+      name: _trackballTopScrews
+      operation: subtract
+
   _expansionSideCutout:
     - what: rectangle
-      size: [23, 2.54+10]
+      size: [2.54+10, 23]
       where: expansion
-      adjust.shift: [2.54/2, 17.9]
+      adjust.shift: [20-3.36+5, 3]
       expand: 0.5
-  
 
 cases:
   expansionBase:
     - what: outline
-      name: _expansionCase
+      name: _trackballBase
       extrude: 1
     - what: outline
-      name: _expansionWalls
+      name: _trackballBaseWalls
       extrude: baseWallHeight+1
     - what: outline
-      name: _expansionPCBSeat
+      name: _trackballPCBSeat
       extrude: baseHeight+1
     - what: outline
-      name: _expansionHoles
+      name: _trackballBaseStandoffs
+      extrude: baseHeight+1
+    - what: outline
+      name: _trackballBaseScrews
       operation: subtract
       extrude: 50
     - what: outline
-      name: _expansionScrewRecess
+      name: _trackballScrewRecessBase
       operation: subtract
       extrude: 0.6
 
   expansionTop:
     - what: outline
-      name: _expansionWalls
-      extrude: 7.4-1.6
+      name: _trackballBaseWalls
+      extrude: 7.2
     - what: outline
       name: _expansionSideCutout
       extrude: 4.5
       operation: subtract
     - what: outline
-      name: _expansionStandOff
+      name: _trackballTopStandoffs
       extrude: 3
       shift: [0,0, 1.6]
     - what: outline
-      name: _expansionCase
-      extrude: 7.4-1.6-3-1.6
-      shift: [0,0, 1.6+3]
+      name: _trackballBase
+      extrude: 7.2-4
+      shift: [0,0, 4]
     - what: outline
-      name: _trackBallLensCutout
+      name: trackBallLensCutout
+      extrude: 5
+      operation: subtract
+    - what: outline
+      name: trackBallOpticCutout
       extrude: 30
       operation: subtract
 
   expansionTopBallHousing:
     - what: outline
-      name: _expansionCaseCircle
-      extrude: 19
-      shift: [0,0, 7.4-1.6]
+      name: _trackballHousingBaseWithWalls
+      extrude: 17
+      shift: [0,0, 7.4]
 
-  lensCutout:
-    - what: outline
-      name: _trackBallLensCutout
-      extrude: 30
   opticsCutout:
     - what: outline
       name: trackBallOpticCutout
       extrude: 30
 
 
-# pcbs:
-#   trackball:
-#     template: kicad8
-#     outlines:
-#       - outline: _expansionPCB
-#       - outline: _trackBallSensorCutout
-#     footprints:
-#       mountingHoles:
-#         what: ceoloide/mounting_hole_npth
-#         where: /^expansion_screw/
-#       pinHeaderTrackBall:
-#         what: pin_header_7pin
-#         where: expansion
-#         adjust.shift: [0, 17.9]
-#         adjust.rotate: 90
+pcbs:
+  trackball:
+    template: kicad8
+    outlines:
+      - outline: _pcbOutlineWithCutout
+      # - outline: _expansionPCB
+      # - outline: trackBallSensorCutout
+      # - outline: _trackballCircle
+    footprints:
+      mountingHoles:
+        what: ceoloide/mounting_hole_npth
+        where: /^expansion_screw_base/
+      # pinHeaderTrackBall:
+      #   what: pin_header_7pin
+      #   where: expansion
+      #   adjust.shift: [0, 17.9]
+      #   adjust.rotate: 90
+      #   params:
+      #     P1: MOTION
+      #     P2: SCLK
+      #     P3: MOSI
+      #     P4: MISO
+      #     P5: NCS
+      #     P6: P3V3
+      #     P7: GND
+      pinHeaderExpansionR:
+        what: pin_header_6pin
+        where: expansion
+        params:
+          P1: SCLK
+          P2: NCS
+          P3: MISO
+          P4: MOSI
+          P5: P3V3
+          P6: GND
+        adjust.shift: [20-3.36, 3]
+      pinHeaderExpansionL:
+        what: pin_header_6pin
+        where: expansion
+        params:
+          P1: SCLK
+          P2: NCS
+          P3: MISO
+          P4: MOSI
+          P5: P3V3
+          P6: GND
+        adjust.shift: [-20+3.36, 3]
+      pinHeaderTrackballBreakoutPlug:
+        what: pin_header_6pin
+        where: expansion
+        params:
+          P1: SCLK
+          P2: NCS
+          P3: MISO
+          P4: MOSI
+          P5: P3V3
+          P6: GND
+        adjust.rotate: 90
+        adjust.shift: [0+2.54/2, 17.9+9.8]

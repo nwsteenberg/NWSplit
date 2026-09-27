@@ -1,5 +1,5 @@
 # NWSplit keyboard
-NWSplit is a 3+5x4+3 keys colum-staggered split keyboard designed in Ergogen. Inspiration from [achyudh/karma](https://github.com/achyudh/karma), [christianselig/caldera](https://christianselig.com/2024/07/caldera-keyboard/) and [carrefinho/forager](https://github.com/carrefinho/forager) 
+NWSplit is a 3+5x4+3 keys column-staggered split keyboard designed in Ergogen. Inspiration from [achyudh/karma](https://github.com/achyudh/karma), [christianselig/caldera](https://christianselig.com/2024/07/caldera-keyboard/) and [carrefinho/forager](https://github.com/carrefinho/forager) 
 
 The goal was to create a keyboard perfect for me. Through that process i have created quite a handful of keyboards that did not meet that criteria. See [Graveyard](images/graveyard)
 
@@ -36,13 +36,13 @@ ________________________________________
 | Diode | 1N4148, SOD123 | 52 | |
 | MCU | Waveshare RP2040-zero | 2 | You can also use clones. Just check pinout match Waveshare |
 | TRRS Connector | PJ320A Connector | 2 | |  
-| LED | SK6912 MINI-E | 52 | Optional if you want per-key RGB |
 | Switch Hotswap Sockets | Kailh Choc V1/V2 compatible | 52 | No "support" post for v2 - so dont use the stock version (red/blue/brown) |
 | Switches | Any Kailh Choc V2 type switch without guide pin | 52 | |
 | Keycaps | Your choice. | 52 | THT or LPF is generally nice and low profile |
-| Rotary encoder | EC11/EC12 | 0-2 | Button click is supported | 
-| Magnetic Pogo Connector | Angled 6 pin Magnetic Pogo Pin Connector | 0-2 | Used for experimentation - not needed |
 | Heat Inserts | M2 L3 OD3.5 or OD3 for resin | 12 | |
+| LED | SK6812 MINI-E | 52 | (Optional) Per-key RGB |
+| Rotary encoder | EC11/EC12 | 0-2 | (Optional) Button click is supported | 
+| Magnetic Pogo Connector | Angled 6 pin Magnetic Pogo Pin Connector | 0-2 | (Optional) Used for experimentation - not needed |
 
 ## Build Instructions
 \#TODO

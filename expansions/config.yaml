@@ -54,23 +54,36 @@ points:
       anchor:
         - ref: expansion
           shift: [17.5,28]
+    trackpadCenter:
+      anchor:
+        - ref: expansion
+          shift: [0,0]
 
 outlines:
-  # Expansion stuff
-  trackBallSensorCutout:
+  _baseScrews:
+    - what: circle
+      radius: screwRadius
+      where: /^expansion_screw_base/
+
+  _topScrews:
+    - what: circle
+      radius: screwHoleRadius
+      where: /^expansion_screw_base/
+
+  _trackBallSensorCutout:
   - what: rectangle
     where: expansion
     size: [13, 19]
     adjust.shift: [0, 0]
     fillet: 0.5
-  trackBallLensCutout:
+  _trackBallLensCutout:
   - what: rectangle
     where: expansion
     size: [19.5, 22]
     adjust.shift: [0, 0.25]
     fillet: 7
   
-  trackBallOpticCutout:
+  _trackBallOpticCutout:
   - what: rectangle
     size: [4, 4]
     where: expansion
@@ -88,26 +101,68 @@ outlines:
     size: [38, 34+9.8]
     adjust.shift: [0,3+(9.8/2)]
     expand: outlinePadding
+  
+  _trackpadRef:
+  - what: rectangle
+    where: trackpadCenter
+    adjust.shift: [0,3+(9.8/2)]
+    size: [43.3+0.2, 40.3+0.2]
+    fillet: 3.2
+    adjust.rotate: 90
+  
+  _trackpadSeat:
+  - what: outline
+    name: _trackpadRef
+    expand: -4
+    fillet: 2
 
   _pcbOutlineWithCutout:
   - what: outline
     name: _pcbOutline
   - what: rectangle
     where: expansion
-    size: [22, 34+4]
+    size: [23, 35+4]
     adjust.shift: [0,3-(4/2)]
     operation: subtract
+  
+  _trackpadBase:
+  - what: outline
+    name: _pcbOutline
+    expand: 0.5
+  
+  _trackpadPCBSeat:
+  - what: outline
+    name: _trackpadBase
+    expand: -1
+  - what: outline
+    name: _trackpadBase
+    operation: stack
+
+  _trackpadBaseWalls:
+    - what: outline
+      name: _trackpadBase
+      expand: wallThickness
+    - what: outline
+      name: _trackpadBase
+      operation: subtract
+
+  _trackpadBaseStandoffs:
+    - what: outline
+      name: _baseScrews
+      expand: screwHoleWallThickness
+    - what: outline
+      name: _baseScrews
+      operation: subtract
 
   _trackballHousingBase:
   - what: circle
     where: expansion
-    radius: 19
+    radius: 18
   _trackballHousingBaseWithWalls:
   - what: circle
     where: expansion
-    radius: 19
+    radius: 18
     expand: wallThickness
-
 
   _trackballBase:
   - what: outline
@@ -132,17 +187,7 @@ outlines:
       name: _trackballBase
       operation: subtract
 
-  _trackballBaseScrews:
-    - what: circle
-      radius: screwRadius
-      where: /^expansion_screw_base/
-
-  _trackballTopScrews:
-    - what: circle
-      radius: screwHoleRadius
-      where: /^expansion_screw_base/
-
-  _trackballScrewRecessBase:
+  _screwRecessBase:
     - what: circle
       radius: screwHeadRadius
       where: /^expansion_screw_base/
@@ -154,23 +199,23 @@ outlines:
 
   _trackballBaseStandoffs:
     - what: outline
-      name: _trackballBaseScrews
+      name: _baseScrews
     - what: outline
       name: _trackballBreakoutScrews
       expand: screwHoleWallThickness
     - what: outline
-      name: _trackballBaseScrews
+      name: _baseScrews
       operation: subtract
     - what: outline
       name: _trackballBreakoutScrews
       operation: subtract
 
-  _trackballTopStandoffs:
+  _topStandoffs:
     - what: outline
-      name: _trackballTopScrews
+      name: _topScrews
       expand: screwHoleWallThickness
     - what: outline
-      name: _trackballTopScrews
+      name: _topScrews
       operation: subtract
 
   _expansionSideCutout:
@@ -181,7 +226,7 @@ outlines:
       expand: 0.5
 
 cases:
-  expansionBase:
+  trackballBase:
     - what: outline
       name: _trackballBase
       extrude: 1
@@ -195,15 +240,63 @@ cases:
       name: _trackballBaseStandoffs
       extrude: baseHeight+1
     - what: outline
-      name: _trackballBaseScrews
+      name: _baseScrews
       operation: subtract
       extrude: 50
     - what: outline
-      name: _trackballScrewRecessBase
+      name: _screwRecessBase
+      operation: subtract
+      extrude: 0.6
+    
+  trackpadBase:
+    - what: outline
+      name: _trackpadBase
+      extrude: 1
+    - what: outline
+      name: _trackpadBaseWalls
+      extrude: baseWallHeight+1
+    - what: outline
+      name: _trackpadPCBSeat
+      extrude: baseHeight+1
+    - what: outline
+      name: _trackpadBaseStandoffs
+      extrude: baseHeight+1
+    - what: outline
+      name: _baseScrews
+      operation: subtract
+      extrude: 50
+    - what: outline
+      name: _screwRecessBase
       operation: subtract
       extrude: 0.6
 
-  expansionTop:
+  trackpadTop:
+    - what: outline
+      name: _trackpadBaseWalls
+      extrude: 7.2
+    - what: outline
+      name: _expansionSideCutout
+      extrude: 4.5
+      operation: subtract
+    - what: outline
+      name: _topStandoffs
+      extrude: 4.5
+    - what: outline
+      name: _trackpadBase
+      extrude: 7.2-4
+      shift: [0,0, 4]
+    - what: outline
+      name: _trackpadRef
+      extrude: 1.15
+      operation: subtract
+      shift: [0,0, 7.2-1.15]
+    - what: outline
+      name: _trackpadSeat
+      extrude: 20
+      operation: subtract
+
+
+  trackballTop:
     - what: outline
       name: _trackballBaseWalls
       extrude: 7.2
@@ -212,19 +305,18 @@ cases:
       extrude: 4.5
       operation: subtract
     - what: outline
-      name: _trackballTopStandoffs
-      extrude: 3
-      shift: [0,0, 1.6]
+      name: _topStandoffs
+      extrude: 4.5
     - what: outline
       name: _trackballBase
       extrude: 7.2-4
       shift: [0,0, 4]
     - what: outline
-      name: trackBallLensCutout
+      name: _trackBallLensCutout
       extrude: 5
       operation: subtract
     - what: outline
-      name: trackBallOpticCutout
+      name: _trackBallOpticCutout
       extrude: 30
       operation: subtract
 
@@ -232,11 +324,11 @@ cases:
     - what: outline
       name: _trackballHousingBaseWithWalls
       extrude: 17
-      shift: [0,0, 7.4]
+      shift: [0,0, 7.2]
 
   opticsCutout:
     - what: outline
-      name: trackBallOpticCutout
+      name: _trackBallOpticCutout
       extrude: 30
 
 
@@ -245,57 +337,101 @@ pcbs:
     template: kicad8
     outlines:
       - outline: _pcbOutlineWithCutout
-      # - outline: _expansionPCB
-      # - outline: trackBallSensorCutout
-      # - outline: _trackballCircle
     footprints:
       mountingHoles:
         what: ceoloide/mounting_hole_npth
         where: /^expansion_screw_base/
-      # pinHeaderTrackBall:
-      #   what: pin_header_7pin
-      #   where: expansion
-      #   adjust.shift: [0, 17.9]
-      #   adjust.rotate: 90
-      #   params:
-      #     P1: MOTION
-      #     P2: SCLK
-      #     P3: MOSI
-      #     P4: MISO
-      #     P5: NCS
-      #     P6: P3V3
-      #     P7: GND
       pinHeaderExpansionR:
         what: pin_header_6pin
         where: expansion
         params:
-          P1: SCLK
-          P2: NCS
-          P3: MISO
-          P4: MOSI
+          P1: P1 #SCLK
+          P2: P2 #NCS
+          P3: P3 #MISO
+          P4: P4 #MOSI
           P5: P3V3
           P6: GND
         adjust.shift: [20-3.36, 3]
+      expansionTextR:
+        what: ceoloide/utility_text
+        where: expansion
+        params:
+          text: "P6\\n\\nP5\\n\\nP4\\n\\nP3\\n\\n3.3v\\n\\nGND"
+          height: 0.77
+          width: 0.77
+          align: right
+        adjust.shift: [15, 3]
       pinHeaderExpansionL:
         what: pin_header_6pin
         where: expansion
         params:
-          P1: SCLK
-          P2: NCS
-          P3: MISO
-          P4: MOSI
+          P1: P1 #SCLK
+          P2: P2 #NCS  #SCL
+          P3: P3 #MISO #SDA
+          P4: P4 #MOSI
           P5: P3V3
           P6: GND
         adjust.shift: [-20+3.36, 3]
+      expansionTextL:
+        what: ceoloide/utility_text
+        where: expansion
+        params:
+          text: "P6\\n\\nP5\\n\\nP4\\n\\nP3\\n\\n3.3v\\n\\nGND"
+          height: 0.77
+          width: 0.77
+          align: left
+        adjust.shift: [-15, 3]
       pinHeaderTrackballBreakoutPlug:
         what: pin_header_6pin
         where: expansion
         params:
-          P1: SCLK
-          P2: NCS
-          P3: MISO
-          P4: MOSI
+          P1: P1
+          P2: P4
+          P3: P3
+          P4: P2
           P5: P3V3
           P6: GND
         adjust.rotate: 90
         adjust.shift: [0+2.54/2, 17.9+9.8]
+      pinHeaderTrackballBreakoutText:
+        what: ceoloide/utility_text
+        where: expansion
+        params:
+          text: "SCLK\\n\\nMOSI\\n\\nMISO\\n\\nNCS\\n\\n3.3v\\n\\nGND"
+          height: 0.77
+          width: 0.77
+          align: right
+        adjust.shift: [0+2.54/2, 16+9.8]
+        adjust.rotate: 90
+      pinHeaderTrackballBreakoutInfo:
+        what: ceoloide/utility_text
+        where: expansion
+        params:
+          text: "jfedor2/pmw3360-breakout"
+          height: 0.77
+          width: 0.77
+        adjust.shift: [0+2.54/2, 20+9.8]
+      # https://jlcpcb.com/partdetail/SHENZHEN_ATOMTECH-FPC0500609200/C479749
+      fpcTouchpad:
+        what: 6pinFPC0.5
+        where: expansion
+        params: 
+          P1: P1 #RDY
+          P2: P4 #NRST
+          P3: GND
+          P4: P3V3 #VDDHI
+          P5: P2 #SCL
+          P6: P3 #SDA
+          P7: ""
+          P8: ""
+        adjust.shift: [-17, 18]
+        adjust.rotate: 90
+      tps43azoteqText:
+        what: ceoloide/utility_text
+        where: expansion
+        params:
+          text: "Azoteq\\nTPS43/TPS65"
+          height: 0.77
+          width: 0.77
+        adjust.shift: [-15, 23.5]
+

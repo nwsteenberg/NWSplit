@@ -41,7 +41,7 @@ jobs:
 
       - name: Copy nwsplit into Vial-QMK
         run: |
-          cp -r vial-qmk/nwsplit/ vial-qmk-src/keyboards/
+          cp -r firmware/nwsplit/ vial-qmk-src/keyboards/
 
       - name: Build firmware
         run: |

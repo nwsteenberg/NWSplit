@@ -1,10 +1,7 @@
 units:
   outlinePadding: 1
 
-  plateThickness: 1.6
   pcbThickness: 1.6
-
-  keyCutoutDimentions: 13.95
 
   # Case
   baseHeight: 3
@@ -12,10 +9,8 @@ units:
   screwHoleRadius: 1.55
   screwHoleWallThickness: 2
   screwHeadRadius: 2.1 # 4mm + 0.2mm buffer
-  fromPlateToTop: 5
 
   baseWallHeight: baseHeight + pcbThickness
-  topWallHeight: 2.2
   wallThickness: 1.6
 
 points:

@@ -1,4 +1,4 @@
-# NWSplit ⌨️
+# NWSplit
 
 > A 52-key, column-staggered split ergonomic keyboard developed almost entirely through **Ergogen**.
 
@@ -61,7 +61,7 @@ The goal: build the *perfect* keyboard for me. Of course, getting there meant go
 
 ## 💡 Inspiration
 
-NWSplit draws design inspiration from some projects:
+Throughout the journey the following projects provided a ton of inspiration to create the version of the keyboard as it is today:
 * [christianselig/caldera](https://christianselig.com/2024/07/caldera-keyboard/)
 * [achyudh/karma](https://github.com/achyudh/karma)
 * [carrefinho/forager](https://github.com/carrefinho/forager)

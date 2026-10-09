@@ -587,14 +587,18 @@ cases:
       operation: subtract
       shift: [0,0, -1.6]
 
-    - what: case
-      name: _knobNegative
-      operation: subtract
-
     - what: outline
       name: _rightSubstitution
       extrude: 100
       shift: [0, 0, -50]
+      operation: subtract
+
+  topLeftEncoder:
+    - what: case
+      name: topLeft
+
+    - what: case
+      name: _knobNegative
       operation: subtract
 
   topRight:
@@ -617,6 +621,13 @@ cases:
       shift: [0, 0, -50]
       operation: subtract
 
+  topRightEncoder:
+    - what: case
+      name: topRight
+
+    - what: case
+      name: _knobNegative
+      operation: subtract
 pcbs:
   pcb:
     template: kicad8

@@ -19,7 +19,7 @@ enum custom_keycodes {
     DRAG_SCROLL = SAFE_RANGE,
 };
 
-bool set_scrolling = false;
+static bool set_scrolling = false;
 
 // Modify these values to adjust the scrolling speed
 #define SCROLL_DIVISOR_H 8.0
@@ -56,11 +56,8 @@ report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case DRAG_SCROLL:
-            // Toggle set_scrolling when DRAG_SCROLL key is pressed or released
             set_scrolling = record->event.pressed;
-            break;
-        default:
-            break;
+            return false;
     }
     return true;
 }

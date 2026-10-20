@@ -16,12 +16,13 @@ enum custom_keycodes {
     DRAG_SCROLL = SAFE_RANGE,
 };
 
-bool set_scrolling = false;
-
+static bool set_scrolling = false;
 report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
     if (set_scrolling) {
-        mouse_report.h = mouse_report.x;
-        mouse_report.v = mouse_report.y;
+        // Divide by 2 or 4 to make scrolling smoother and less fast/sensitive
+        mouse_report.h = mouse_report.x / 2;
+        mouse_report.v = -mouse_report.y / 2;
+        // Zero out normal cursor movement while scrolling
         mouse_report.x = 0;
         mouse_report.y = 0;
     }
@@ -29,8 +30,10 @@ report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    if (keycode == DRAG_SCROLL && record->event.pressed) {
-        set_scrolling = !set_scrolling;
+    switch (keycode) {
+        case DRAG_SCROLL:
+            set_scrolling = record->event.pressed;
+            return false;
     }
     return true;
 }

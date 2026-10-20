@@ -11,6 +11,7 @@ void keyboard_post_init_user(void) {
     set_auto_mouse_enable(true); // Safely enable it post-boot
 }
 
+// Drag scroll start
 enum custom_keycodes {
     DRAG_SCROLL = SAFE_RANGE,
 };
@@ -33,6 +34,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
     return true;
 }
+// Drag scroll end
 
 #define L_1 MO(_LAYER1)
 #define L_2 MO(_LAYER2)

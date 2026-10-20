@@ -25,3 +25,7 @@
 // PMW3360 Specific Configuration
 #define PMW33XX_CS_PIN GP5       
 #define POINTING_DEVICE_ROTATION_180
+
+// Mouse layer setup
+#define POINTING_DEVICE_AUTO_MOUSE_ENABLE
+#define AUTO_MOUSE_DEFAULT_LAYER 2 // Mouse layer is index 2

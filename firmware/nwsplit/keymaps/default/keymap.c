@@ -7,6 +7,10 @@ enum layer_names {
     _POINTER
 };
 
+void pointing_device_init_user(void) {
+    set_auto_mouse_enable(true);         // always required before the auto mouse feature will work
+}
+
 #define L_1 MO(_LAYER1)
 #define L_2 MO(_LAYER2)
 #define L_P MO(_POINTER)

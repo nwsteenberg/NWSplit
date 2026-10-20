@@ -28,4 +28,5 @@
 
 // Mouse layer setup
 #define POINTING_DEVICE_AUTO_MOUSE_ENABLE
-#define AUTO_MOUSE_DEFAULT_LAYER 2 // Mouse layer is index 2
+#define AUTO_MOUSE_DEFAULT_LAYER _POINTER 
+#define AUTO_MOUSE_TIMEOUT 500

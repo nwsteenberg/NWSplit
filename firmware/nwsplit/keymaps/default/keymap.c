@@ -7,8 +7,8 @@ enum layer_names {
     _POINTER
 };
 
-void pointing_device_init_user(void) {
-    set_auto_mouse_enable(true);         // always required before the auto mouse feature will work
+void keyboard_post_init_user(void) {
+    set_auto_mouse_enable(true); // Safely enable it post-boot
 }
 
 #define L_1 MO(_LAYER1)

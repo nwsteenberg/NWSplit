@@ -29,16 +29,18 @@
 // // Trackball end
 // Trackpad start
 #define AZOTEQ_IQS5XX_TPS43            // Loads specific dimensions and resolution for TPS43
-#define AZOTEQ_IQS5XX_RESET_PIN GP6    // Active-low reset pin
-#define AZOTEQ_IQS5XX_RDY_PIN   GP3    // Active-high RDY pin
+#define AZOTEQ_IQS5XX_PRESS_AND_HOLD_ENABLE 1
+#define AZOTEQ_IQS5XX_HOLD_TIME 300
+#define AZOTEQ_IQS5XX_SWIPE_INITIAL_TIME 150
+#define AZOTEQ_IQS5XX_SWIPE_INITIAL_DISTANCE 300
 
 // RP2040 I2C Configuration
 #define I2C_DRIVER I2CD0
-#define I2C1_SDA_PIN GP4
-#define I2C1_SCL_PIN GP5
+#define I2C0_SDA_PIN GP4
+#define I2C0_SCL_PIN GP5
 // Trackpad end
 
 // Mouse layer setup
-#define POINTING_DEVICE_AUTO_MOUSE_ENABLE
-#define AUTO_MOUSE_DEFAULT_LAYER 3
-#define AUTO_MOUSE_TIMEOUT 500
+//#define POINTING_DEVICE_AUTO_MOUSE_ENABLE
+//#define AUTO_MOUSE_DEFAULT_LAYER 3
+//#define AUTO_MOUSE_TIMEOUT 500

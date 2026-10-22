@@ -15,17 +15,6 @@
 #define RGB_MATRIX_MAXIMUM_SPEED 100
 #define RGB_MATRIX_KEYPRESSES
 
-// Pointing Device & SPI Configuration (PIO SPI for GP4/GP5/GP6)
-#define POINTING_DEVICE_RIGHT
-#define SPLIT_POINTING_ENABLE
-#define SPI_SCK_PIN GP6          // Clock
-#define SPI_MOSI_PIN GP3         // MOSI (as wired on your board)
-#define SPI_MISO_PIN GP4         // MISO
-
-// PMW3360 Specific Configuration
-#define PMW33XX_CS_PIN GP5       
-#define POINTING_DEVICE_ROTATION_180
-
 // Mouse layer setup
 #define POINTING_DEVICE_AUTO_MOUSE_ENABLE
 #define AUTO_MOUSE_DEFAULT_LAYER 3

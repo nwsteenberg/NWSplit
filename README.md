@@ -51,9 +51,9 @@ The goal: build the *perfect* keyboard for me. Of course, getting there meant go
 
 - [ ] **Build Instructions:** Step-by-step assembly guide.
 - [ ] **Sandwitch case:** Cheap case option without 3d printing.
-- [ ] **Expansion Boards:** 
-  - [ ] Trackball module
-  - [ ] Trackpad module
+- [ ] **Expansion Modules:** 
+  - [x] Trackball
+  - [x] Trackpad
 - [ ] **Images:** Add build process and final images of the keyboard and expansions.
 - [ ] **Graveyard:** Show what keyboards didn't make the cut.
 

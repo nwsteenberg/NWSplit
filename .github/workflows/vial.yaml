@@ -46,19 +46,22 @@ jobs:
       - name: Build firmware
         run: |
           cd vial-qmk-src
-          make nwsplit:vial
+          make nwsplit/trackpad:vial nwsplit/trackball:vial
 
       - name: Upload Firmware Artifact
         uses: actions/upload-artifact@v4
         with:
           name: nwsplit-firmware
-          path: vial-qmk-src/nwsplit_vial.uf2
+          path: vial-qmk-src/*_vial.uf2
 
       - name: Create Release (only when tagged)
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
-          files: vial-qmk-src/nwsplit_vial.uf2
+          files: |
+            vial-qmk-src/nwsplit_trackball_vial.uf2
+            vial-qmk-src/nwsplit_trackpad_vial.uf2
+            vial-qmk-src/nwsplit_default_vial.uf2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

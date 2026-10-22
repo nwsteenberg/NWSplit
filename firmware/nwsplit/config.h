@@ -20,10 +20,8 @@
 #define SPLIT_POINTING_ENABLE
 // Trackpad start
 #define AZOTEQ_IQS5XX_TPS43            // Loads specific dimensions and resolution for TPS43
-#define AZOTEQ_IQS5XX_PRESS_AND_HOLD_ENABLE 1
 #define AZOTEQ_IQS5XX_ROTATION_270
-#define AZOTEQ_IQS5XX_SWIPE_X_ENABLE
-#define AZOTEQ_IQS5XX_SWIPE_y_ENABLE
+#define AZOTEQ_IQS5XX_SCROLL_ENABLE 0
 
 // RP2040 I2C Configuration
 #define I2C_DRIVER I2CD0

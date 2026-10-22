@@ -33,9 +33,9 @@
 #define AZOTEQ_IQS5XX_RDY_PIN   GP3    // Active-high RDY pin
 
 // RP2040 I2C Configuration
-#define I2C_DRIVER I2CD1               // Uses I2C block 0 on RP2040 (I2CD1 mapping in ChibiOS)
-#define I2C1_SDA_PIN GP4
-#define I2C1_SCL_PIN GP5
+#define I2C_DRIVER I2CD0
+#define I2C0_SDA_PIN GP4
+#define I2C0_SCL_PIN GP5
 // Trackpad end
 
 // Mouse layer setup

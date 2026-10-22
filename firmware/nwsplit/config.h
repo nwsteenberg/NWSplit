@@ -18,15 +18,6 @@
 // Pointing Device & SPI Configuration (PIO SPI for GP4/GP5/GP6)
 #define POINTING_DEVICE_RIGHT
 #define SPLIT_POINTING_ENABLE
-// // Trackball start
-// #define SPI_SCK_PIN GP6          // Clock
-// #define SPI_MOSI_PIN GP3         // MOSI (as wired on your board)
-// #define SPI_MISO_PIN GP4         // MISO
-//
-// // PMW3360 Specific Configuration
-// #define PMW33XX_CS_PIN GP5       
-// #define POINTING_DEVICE_ROTATION_180
-// // Trackball end
 // Trackpad start
 #define AZOTEQ_IQS5XX_TPS43            // Loads specific dimensions and resolution for TPS43
 #define AZOTEQ_IQS5XX_PRESS_AND_HOLD_ENABLE 1
@@ -36,8 +27,8 @@
 
 // RP2040 I2C Configuration
 #define I2C_DRIVER I2CD0
-#define I2C0_SDA_PIN GP4
-#define I2C0_SCL_PIN GP5
+#define I2C1_SDA_PIN GP4
+#define I2C1_SCL_PIN GP5
 // Trackpad end
 
 // Mouse layer setup

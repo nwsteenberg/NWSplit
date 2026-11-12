@@ -46,7 +46,7 @@ jobs:
       - name: Build firmware
         run: |
           cd vial-qmk-src
-          make nwsplit/trackpad:vial nwsplit/trackball:vial
+          make nwsplit/trackpad:default nwsplit/trackpad:vial nwsplit/trackball:vial
 
       - name: Upload Firmware Artifact
         uses: actions/upload-artifact@v4

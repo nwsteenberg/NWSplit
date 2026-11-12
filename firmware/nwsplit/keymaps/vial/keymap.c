@@ -17,6 +17,8 @@ void keyboard_post_init_user(void) {
 // https://docs.qmk.fm/features/pointing_device#advanced-drag-scroll
 enum custom_keycodes {
     DRAG_SCROLL = SAFE_RANGE,
+    CPI_INC_100,
+    CPI_DEC_100,
 };
 
 static bool set_scrolling = false;
@@ -62,6 +64,40 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 // Drag scroll end
+// CPI Increase start
+enum custom_keycodes {
+};
+
+// 2. Define limits for your sensor
+#define CPI_MIN 100
+#define CPI_MAX 3200 // Adjust this to match your sensor's maximum supported CPI
+
+// 3. Handle the key presses
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case CPI_INC_100:
+            if (record->event.pressed) {
+                uint16_t current_cpi = pointing_device_get_cpi();
+                uint16_t new_cpi = current_cpi + 100;
+                if (new_cpi > CPI_MAX) {
+                    new_cpi = CPI_MAX;
+                }
+                pointing_device_set_cpi(new_cpi);
+            }
+            return false;
+
+        case CPI_DEC_100:
+            if (record->event.pressed) {
+                uint16_t current_cpi = pointing_device_get_cpi();
+                // Ensure we don't drop below CPI_MIN or underflow uint16_t
+                uint16_t new_cpi = (current_cpi > CPI_MIN + 100) ? (current_cpi - 100) : CPI_MIN;
+                pointing_device_set_cpi(new_cpi);
+            }
+            return false;
+    }
+    return true;
+}
+// CPI Increase end
 
 #define L_1 MO(_LAYER1)
 #define L_2 MO(_LAYER2)
@@ -100,9 +136,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_BTN3,                                                                                          
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BTN1, KC_BTN2,                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  
+        KC_TRNS, KC_TRNS, KC_TRNS, KC_BTN1, KC_BTN2, KC_BTN3,                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  
                  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, 
-                                          KC_BTN3, DRAG_SCROLL, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
+                                          KC_TRNS, DRAG_SCROLL, KC_TRNS, CPI_DEC_100, CPI_INC_100, KC_TRNS
     )
 };
 

@@ -13,7 +13,6 @@ void keyboard_post_init_user(void) {
     set_auto_mouse_enable(true); // Safely enable it post-boot
 }
 
-// Drag scroll start
 // https://docs.qmk.fm/features/pointing_device#advanced-drag-scroll
 enum custom_keycodes {
     DRAG_SCROLL = SAFE_RANGE,
@@ -21,6 +20,7 @@ enum custom_keycodes {
     CPI_DEC_100,
 };
 
+// Drag scroll start
 static bool set_scrolling = false;
 
 // Modify these values to adjust the scrolling speed
@@ -54,27 +54,15 @@ report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
     return mouse_report;
 }
 
-// Function to handle key events and enable/disable drag scrolling
+#define CPI_MIN 100
+#define CPI_MAX 12000
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case DRAG_SCROLL:
             set_scrolling = record->event.pressed;
             return false;
-    }
-    return true;
-}
-// Drag scroll end
-// CPI Increase start
-enum custom_keycodes {
-};
 
-// 2. Define limits for your sensor
-#define CPI_MIN 100
-#define CPI_MAX 3200 // Adjust this to match your sensor's maximum supported CPI
-
-// 3. Handle the key presses
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
         case CPI_INC_100:
             if (record->event.pressed) {
                 uint16_t current_cpi = pointing_device_get_cpi();
@@ -89,7 +77,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case CPI_DEC_100:
             if (record->event.pressed) {
                 uint16_t current_cpi = pointing_device_get_cpi();
-                // Ensure we don't drop below CPI_MIN or underflow uint16_t
                 uint16_t new_cpi = (current_cpi > CPI_MIN + 100) ? (current_cpi - 100) : CPI_MIN;
                 pointing_device_set_cpi(new_cpi);
             }
@@ -97,7 +84,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
     return true;
 }
-// CPI Increase end
 
 #define L_1 MO(_LAYER1)
 #define L_2 MO(_LAYER2)
